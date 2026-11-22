@@ -21,6 +21,6 @@ Bots do exact work. They do not use an LLM. Use your CI system, scripts or exist
 python3 bots/gatekeeper.py --config .aqef/config.yaml --metrics bots/example-metrics.json
 ```
 
-Needs Python 3.9+ and PyYAML. `nfr_results` in the metrics file maps each NFR type to `pass` or `fail`; a type that the tier requires but has no result escalates.
+Needs Python 3.10+ and PyYAML. `nfr_results` in the metrics file maps each NFR type to `pass` or `fail`; a type that the tier requires but has no result escalates.
 
 Only the gatekeeper has a sample implementation. The other bots are contracts: build them with your CI and tools.
