@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+# Release bundles are built from the folders, not committed.
+*.zip
+# Loose copies of diagrams; the originals are in docs/diagrams/.
+/*.png

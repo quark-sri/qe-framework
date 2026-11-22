@@ -1,0 +1,29 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.9", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -r requirements-dev.txt
+      - name: Kit consistency
+        run: python scripts/check_kit.py
+      - name: Tests
+        run: pytest -q
+      - name: Gatekeeper on example metrics
+        working-directory: aqef-kit
+        run: python bots/gatekeeper.py --config .aqef/config.yaml --metrics bots/example-metrics.json

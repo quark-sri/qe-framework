@@ -1,0 +1,121 @@
+# AQEF configuration. The Quality Gatekeeper bot reads this file.
+# All numbers are starting values. Tune them after two or three releases.
+
+version: 1
+
+paths:
+  domain_kb: domain/
+  features: features/
+  specs: specs/
+  triage: triage/
+  reports: reports/
+  test_architecture: qa/test-architecture.md
+
+# Risk tiers. Assign one tier to each capability in domain/capabilities/*.md
+tiers:
+  t1:
+    description: Money, safety, security, privacy, legal
+    mutation_score_min: 0.80
+    seeded_fault_detection_min: 0.95
+    criteria_coverage_min: 1.00
+    flake_reruns: 10
+    nfr_required: [security, performance, accessibility]
+    human_gates: [H1, H2, H3, H4]
+  t2:
+    description: Core user journeys
+    mutation_score_min: 0.70
+    seeded_fault_detection_min: 0.90
+    criteria_coverage_min: 1.00
+    flake_reruns: 5
+    nfr_required: [security]
+    human_gates: [H1, H4]
+    escalate_gates: [H2, H3]        # run only when the panel says ESCALATE
+  t3:
+    description: Internal tools, cosmetic changes
+    mutation_score_min: null         # not measured
+    seeded_fault_detection_min: null
+    criteria_coverage_min: 0.95
+    flake_reruns: 3
+    nfr_required: []
+    human_gates: [H1, H4]
+    sample_audit_rate: 0.10          # H2 and H3 on a 10% sample
+
+suite_rules:
+  red_before_green_required: true
+  ui_share_max: 0.10                 # share of tests at UI level
+  gating_flake_rate_max: 0.01
+  pr_feedback_minutes_max: 15
+  quarantine_max_sprints: 2
+
+review_panel:
+  provider: aqef                     # aqef | qestack | custom
+  personas:
+    - ai-behavior-auditor
+    - hallucination-checker
+    - domain-oracle-reviewer
+    - test-automation-architect
+    - determinism-flakiness-engineer
+    - maintainability-craftsperson
+    - suite-cost-speed-reviewer
+  accept_score_min: 80               # Test Quality Score, 0 to 100
+
+# Autonomy levels: L0 suggest, L1 draft, L2 act reviewed, L3 act alone audited, L4 autonomous
+autonomy:
+  promotion:
+    min_decisions: 50
+    window_days: 30
+    min_audit_agreement: 0.95
+    no_t1_miss: true
+  demotion:
+    on_t1_miss: true
+    audit_agreement_below: 0.90
+  agents:
+    spec-critic:             {t1: L1, t2: L1, t3: L1}
+    risk-analyst:            {t1: L1, t2: L1, t3: L1}
+    domain-curator:          {t1: L1, t2: L1, t3: L1}
+    scenario-designer:       {t1: L1, t2: L2, t3: L2}
+    test-strategist:         {t1: L1, t2: L2, t3: L2}
+    test-data-designer:      {t1: L1, t2: L2, t3: L2}
+    automation-engineer:     {t1: L2, t2: L2, t3: L2}
+    test-fixer:              {t1: L1, t2: L2, t3: L2}
+    defect-reporter:         {t1: L1, t2: L2, t3: L2}
+    failure-triage:          {t1: L1, t2: L1, t3: L1}   # promote per state with evidence
+    nfr-test-designer:       {t1: L1, t2: L2, t3: L2}
+    # Read-only agents. They only report; a human gate or the gatekeeper reads their output.
+    test-plan-reviewer:      {t1: L3, t2: L3, t3: L3}
+    test-review-panel:       {t1: L3, t2: L3, t3: L3}
+    fault-seeder:            {t1: L3, t2: L3, t3: L3}
+    coverage-traceability-analyst: {t1: L3, t2: L3, t3: L3}
+    report-analyst:          {t1: L3, t2: L3, t3: L3}
+
+# Triage: the agent acts alone only above these confidence bars.
+triage:
+  rerun_count: 1
+  confidence_bars:
+    product_defect_new: 0.85
+    known_defect: 0.90
+    test_defect: 0.85
+    test_data_issue: 0.85
+    environment: 0.80
+    flaky: 0.85
+  # States that always need gate H5, in every tier.
+  never_autonomous:
+    - expected_change              # changes the oracle
+  # States that need gate H5 when the failing test is T1.
+  # Alerts for regression_of_fixed_defect still go out at once in every tier.
+  t1_requires_human:
+    - regression_of_fixed_defect   # reopening a T1 defect
+    - flaky                        # a T1 test never leaves the gating suite alone
+
+# Tool commands. The Execution Bot calls these. Replace with your own.
+commands:
+  unit: "mvn -q test"
+  integration: "mvn -q verify -Pintegration"
+  api: "npx playwright test --project=api"
+  ui: "npx playwright test --project=ui"
+  mutation: "mvn -q org.pitest:pitest-maven:mutationCoverage"
+  a11y: "npx playwright test --grep @nfr:a11y"
+  perf: "k6 run perf/smoke.js"
+  security_sast: "semgrep ci"
+  security_dast: "zap-baseline.py -t $BASE_URL"
+  by_tags: "npx playwright test --grep \"{tags}\""

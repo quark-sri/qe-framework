@@ -1,0 +1,79 @@
+# AQEF: Agentic Quality Engineering Framework
+
+AI agents now write code fast and cheaply, so verification is the new bottleneck.
+AQEF makes verification an engineered, measured process. It uses specialist LLM agents for judgement, deterministic bots for facts, and human gates that depend on risk.
+
+![AQEF: eight stages on one shared foundation](docs/diagrams/png/01-framework-overview.png)
+
+## What AQEF does
+
+1. **The spec is the oracle.** Agents derive tests from acceptance criteria and domain rules. Test design agents do not read the implementation.
+2. **Right test, right level.** Each scenario goes to the lowest test level that can prove it. Mutation testing and seeded faults measure how strong the tests are.
+3. **Shared domain knowledge.** A small markdown knowledge base gives agents the correct business rules through progressive disclosure.
+4. **Every failure gets a state.** Failure triage gives each failure a state, an action and a confidence value. Agents act alone only above a confidence bar.
+5. **Reports by layer and by capability.** Tags connect specs, tests, results and defects, so managers see where the risk is.
+
+AQEF is tool-agnostic. It plugs into any spec-driven AI SDLC (GitHub Spec Kit, Amazon Kiro, BMAD and similar) and any coding agent that reads markdown instructions (Claude Code, Codex, Cursor, Copilot).
+[qestack](https://github.com/quark-sri/qestack) is one reference implementation of the test review panel and the proof and hardening gates.
+
+## Repository layout
+
+| Path | Contents |
+| --- | --- |
+| [`docs/AQEF.md`](docs/AQEF.md) | The framework: principles, phases, agents, trust model, triage, reporting, adoption |
+| [`docs/diagrams/`](docs/diagrams/) | 15 diagrams (SVG and PNG): overview, each phase, roles, pyramid, KB, traceability, trust |
+| [`aqef-kit/`](aqef-kit/) | Starter kit: agents, skills, config, templates, gate checklists, tag taxonomy, KB example, schemas, gatekeeper bot |
+| [`scripts/check_kit.py`](scripts/check_kit.py) | Consistency check for the kit (front matter, config, KB links, schemas) |
+| [`tests/`](tests/) | Tests for the gatekeeper and the kit check |
+| [`ROADMAP.md`](ROADMAP.md) | Known gaps and next steps |
+
+## Quick start
+
+```bash
+TARGET=/path/to/your-repo
+
+# 1. Copy the kit folders into the root of your project (your README is not touched)
+cd aqef-kit
+cp -R .aqef domain qa taxonomy templates gates schemas bots "$TARGET"/
+
+# 2. Claude Code: install the agents and skills
+mkdir -p "$TARGET"/.claude/agents "$TARGET"/.claude/skills
+find agents -name '*.md' ! -name README.md -exec cp {} "$TARGET"/.claude/agents/ \;
+cp -R skills/* "$TARGET"/.claude/skills/
+```
+
+Then edit `.aqef/config.yaml`, fill `qa/test-architecture.md` for your stack, and replace the refund example in `domain/` with your own top 5 capabilities.
+See [`aqef-kit/README.md`](aqef-kit/README.md) for the phase mapping to Spec Kit, Kiro and BMAD.
+
+Try the quality gatekeeper:
+
+```bash
+pip install -r requirements-dev.txt
+cd aqef-kit && python bots/gatekeeper.py --metrics bots/example-metrics.json
+```
+
+## Development
+
+```bash
+pip install -r requirements-dev.txt
+python scripts/check_kit.py
+pytest -q
+```
+
+CI runs the same checks on every push and pull request.
+
+## Diagrams
+
+| | |
+| --- | --- |
+| [Traditional vs AI era](docs/diagrams/png/02-traditional-vs-ai-era.png) | [Swimlane roles](docs/diagrams/png/03-swimlane-roles.png) |
+| [Operating model](docs/diagrams/png/04-operating-model.png) | [Stage 1: Specify](docs/diagrams/png/05-stage1-specify.png) |
+| [Stage 2: Plan](docs/diagrams/png/06-stage2-plan.png) | [Test level pyramid](docs/diagrams/png/07-test-level-pyramid.png) |
+| [Stages 3–4: Implement](docs/diagrams/png/08-stage3-4-implement.png) | [Stage 4: Harden and review](docs/diagrams/png/09-stage4-harden-review.png) |
+| [Stage 5: Converge](docs/diagrams/png/10-stage5-converge.png) | [Stages 6–7: Triage](docs/diagrams/png/11-stage6-7-triage.png) |
+| [Stage 8: Reporting](docs/diagrams/png/12-stage8-reporting.png) | [Domain knowledge base](docs/diagrams/png/13-domain-knowledge-base.png) |
+| [Traceability chain](docs/diagrams/png/14-traceability-chain.png) | [Trust and human gates](docs/diagrams/png/15-trust-and-human-gates.png) |
+
+## License
+
+[Apache-2.0](LICENSE)
