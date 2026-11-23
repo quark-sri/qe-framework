@@ -156,7 +156,7 @@ triage:
 # gating: true means a failure stops the merge (pr) or the release (release).
 # T1 changes also run the post_merge commands before merge. Time targets live in speed_budget only.
 stages:
-  precheck:   {gating: false, runs: [unit]}                                  # in the agent session, before the PR
+  precheck:   {gating: false, runs: [unit]}                                  # skill aqef-precheck, in the agent session
   pr:         {gating: true,  runs: [unit, integration, api, security_sast]}
   post_merge: {gating: false, runs: [ui, mutation, a11y]}
   nightly:    {gating: false, runs: [unit, integration, api, ui, mutation, a11y, perf]}

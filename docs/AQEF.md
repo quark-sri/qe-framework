@@ -147,6 +147,8 @@ Each phase lists its quality activities, the agents, the outputs and the exit ga
 
 **Output:** test code, `quality-report.md` with an ACCEPT or ESCALATE result. **Exit gate H3 (human, risk-based):** a QE engineer reviews the panel report. T1: always, before merge. T2: on escalation, as a follow-up after merge. T3: on a 10% sample, as a follow-up.
 
+**Before the PR:** the `aqef-precheck` skill runs the precheck stage, the Test Guard and the tag and red-before-green checks in the agent session. Most problems are fixed there, before CI runs.
+
 ### Phase 5: Converge — prove the whole change
 
 1. The **Execution Bot** runs the full affected regression in the dev container (test impact analysis selects the set; T1 runs everything).

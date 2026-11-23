@@ -12,6 +12,7 @@ This repository uses AQEF for quality engineering. Follow these instructions whe
 | A spec is new or changed | `aqef-spec-review` |
 | The spec is approved (H1) | `aqef-design-tests` |
 | You implement a task | `aqef-implement-tests` |
+| Before you open or update a PR | `aqef-precheck` |
 | Before a PR is merged | `aqef-converge` |
 | A test fails after deploy | `aqef-triage` |
 

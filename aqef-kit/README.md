@@ -41,6 +41,7 @@ Read the [framework doc](../docs/AQEF.md) first. This kit is the working part of
 | 2 Plan | `/plan` | Design | Architect | `aqef-design-tests` |
 | 3 Tasks | `/tasks` | Tasks | Scrum Master | `aqef-design-tests` (task step) |
 | 4 Implement | `/implement` | Task execution | Dev | `aqef-implement-tests` |
+| 4–5 Before the PR | — | — | Dev | `aqef-precheck` |
 | 5 Converge | `/analyze`, PR | Review | QA | `aqef-converge` |
 | 6–7 Deploy, triage | CI/CD | CI/CD | — | `aqef-triage` |
 | 8 Report | — | — | — | `aqef-report` |

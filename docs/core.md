@@ -41,7 +41,7 @@ Each level adds proof. Move up one level when you meet the exit criteria of your
 | 1 | Copy the kit (see the [README](../README.md#quick-start)). Add the Test Guard to CI. Protect `.aqef/` with CODEOWNERS |
 | 2 | List your top 5 capabilities. Give each one a risk tier |
 | 3 | Set the test commands for your stack in `.aqef/config.yaml` |
-| 4–5 | Take one small feature through the 4 agents. Tag its tests. Record red-before-green evidence. Hold H1 and H4 |
+| 4–5 | Take one small feature through the 4 agents. Tag its tests. Record red-before-green evidence. Run `aqef-precheck` before the PR. Hold H1 and H4 |
 
 ### Level 1 checklist
 
