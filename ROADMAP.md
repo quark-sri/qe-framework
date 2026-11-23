@@ -4,11 +4,11 @@ AQEF is a framework plus a starter kit. The framework is complete enough to pilo
 
 ## Bots (deterministic)
 
-Only the Quality Gatekeeper has a sample implementation. The others are contracts in [`aqef-kit/bots/README.md`](aqef-kit/bots/README.md).
+The Quality Gatekeeper and the Test Guard have sample implementations. The others are contracts in [`aqef-kit/bots/README.md`](aqef-kit/bots/README.md).
 
 - [ ] **Results Normalizer:** convert JUnit XML, Playwright JSON and pytest output to `schemas/test-result.schema.json`.
 - [ ] **Traceability Bot:** parse `@req` tags from specs, feature files and test code; emit the matrix and the untagged list; fail on missing `@cap`, `@req`, `@level`.
-- [ ] **Test Guard:** diff rules for deleted tests, new skips, removed assertions, weakened matchers and added retries. Or delegate to `qestack guard`.
+- [x] **Test Guard:** diff rules for deleted tests, removed tests, removed assertions, new skips and added retries (v0.2). Weakened matchers (for example `toEqual` to `toBeDefined`) are not detected yet.
 - [ ] **Report Builder:** layer, capability, delta and test health views from normalized results.
 - [ ] **Data Guard:** scan fixtures for real emails, card numbers and national IDs.
 
@@ -16,9 +16,28 @@ Only the Quality Gatekeeper has a sample implementation. The others are contract
 
 - [ ] A worked end-to-end example: one spec (`SPEC-142`) taken through every phase, with the real output files.
 - [ ] `AGENTS.md` entry point for coding agents other than Claude Code.
-- [ ] Gatekeeper: T3 sample audit selection (`sample_audit_rate`) and per-state triage autonomy checks.
+- [x] Gatekeeper: T3 sample audit selection (`sample_audit_rate`) (v0.2).
+- [ ] Gatekeeper: per-state triage autonomy checks.
+- [ ] **Waiver approval by code owners (v0.3).** Today the Test Guard accepts any non-empty `approved_by`, so an agent could write a waiver that passes. Fix:
+  - CODEOWNERS entry for `.aqef/` (the waivers file and the config).
+  - An agent may propose a waiver with `approved_by: pending`. A pending waiver counts as an open violation.
+  - CI accepts a waiver only when a code owner approved the pull request, or authored the commit that changed the waivers file (for solo maintainers, who cannot approve their own pull request).
+  - The approval is the normal review click. No separate file edit. Response target and backup reviewer per AQEF-004.
 - [ ] Packaging as a Claude Code plugin, like qestack.
 - [ ] Release workflow that builds `aqef-kit.zip` from the folder.
+
+## AI-product track (AQEF-003, milestone v0.5)
+
+For teams whose product calls a model. The first version covers what catches bugs at PR time:
+
+- [ ] Eval sets as tests (golden and adversarial), versioned with the prompt.
+- [ ] Statistical pass rule over N runs, and a `model_variance` triage state.
+- [ ] Graders: deterministic first, then LLM-as-judge with a pinned judge model.
+- [ ] Regression trigger on prompt, model or retrieval-index changes.
+- [ ] Required prompt-injection and data-leak safety set.
+- [ ] Kit: `eval-designer` agent, `aqef-eval` skill, `eval` level and result fields, `@nfr:ai-safety`.
+
+Later: production drift monitoring, red-team agent, bias and fairness suites, RAG split metrics.
 
 ## Framework
 

@@ -2,6 +2,8 @@
 name: scenario-designer
 description: Writes Gherkin scenarios from acceptance criteria and domain rules, without reading code. Use in phase 2 (Plan).
 tools: Read, Grep, Glob, Write
+kind: act
+writes: ["features/**"]
 ---
 
 # Scenario Designer

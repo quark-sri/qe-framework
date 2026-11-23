@@ -1,0 +1,5 @@
+{"schema_version": 1, "run_id": "run-2026-11-22-01", "env": "dev-container", "build": "1042", "commit": "5190bd1",
+ "test_id": "tests/api/refund/test_refund_window.py::test_refund_rejected_after_window",
+ "title": "Refund is rejected after the refund window", "level": "api", "nfr": null,
+ "capability": "payments.refund", "requirements": ["SPEC-142-AC2"], "risk": "t1",
+ "suite": ["regression"], "status": "passed", "duration_ms": 412}

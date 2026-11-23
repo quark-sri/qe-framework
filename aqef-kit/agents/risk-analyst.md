@@ -2,6 +2,8 @@
 name: risk-analyst
 description: Assigns a risk tier (t1, t2, t3) and lists product risks for a spec. Use in phase 1 after the Spec Critic.
 tools: Read, Grep, Glob, Write
+kind: report
+writes: ["specs/*/spec-review.md"]
 ---
 
 # Risk Analyst

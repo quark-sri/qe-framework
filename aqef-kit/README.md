@@ -12,18 +12,18 @@ Read the [framework doc](../docs/AQEF.md) first. This kit is the working part of
 | `.aqef/config.yaml` | Risk tiers, gate thresholds, autonomy levels, triage confidence bars |
 | `agents/` | One definition per LLM agent: role, inputs, outputs, must-not rules |
 | `skills/` | One skill per phase. Each skill runs agents and bots in order |
-| `bots/` | Contracts for deterministic bots, and a sample `gatekeeper.py` |
+| `bots/` | Contracts for deterministic bots, and sample `gatekeeper.py` and `testguard.py` |
 | `templates/` | Output templates that agents must fill |
 | `gates/human-gates.md` | Checklists for human gates H1 to H6 |
 | `taxonomy/tags.md` | Tag rules for specs, features, tests, results and defects |
 | `domain/` | Knowledge base skeleton with a worked example (refunds) |
 | `qa/test-architecture.md` | Test architecture contract template |
-| `schemas/` | JSON schemas for normalized test results and triage records |
+| `schemas/` | JSON schemas for the config, gate metrics, normalized test results and triage records, with example records |
 
 ## How to install
 
 1. Copy the kit into the root of your repo.
-2. Edit `.aqef/config.yaml`. Set your tiers, thresholds and tool commands.
+2. Edit `.aqef/config.yaml`. Set your tiers, thresholds and tool commands. Install the bot dependencies: `pip install -r bots/requirements.txt`.
 3. Fill `qa/test-architecture.md` for your stack.
 4. Replace the example in `domain/` with your own capabilities. Start with the top 5.
 5. Install the agents and skills for your coding agent:

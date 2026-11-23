@@ -8,7 +8,7 @@ Gherkin tags flow into test code as annotations (JUnit `@Tag`, pytest markers, P
 | Tag | Format | Example | Rule |
 | --- | --- | --- | --- |
 | Capability | `@cap:<domain>.<capability>` | `@cap:payments.refund` | Must exist in `domain/capabilities/` |
-| Requirement | `@req:<spec-id>-AC<n>` | `@req:SPEC-142-AC3` | One or more. Must exist in the spec |
+| Requirement | `@req:<spec-id>-AC<n>` | `@req:SPEC-142-AC3` | One or more. Must exist in the spec. NFR tests may use `@nfr` instead |
 | Level | `@level:<level>` | `@level:api` | One of: unit, component, contract, integration, api, ui |
 | Risk | `@risk:<tier>` | `@risk:t1` | Inherits the capability tier unless raised |
 
@@ -18,14 +18,14 @@ Gherkin tags flow into test code as annotations (JUnit `@Tag`, pytest markers, P
 | --- | --- | --- | --- |
 | Suite | `@suite:<name>` | `@suite:smoke` | smoke, regression, nightly, release |
 | Defect | `@defect:<id>` | `@defect:BUG-881` | Test proves a defect fix. Used by the delta report |
-| NFR | `@nfr:<type>` | `@nfr:a11y` | security, perf, a11y |
+| NFR | `@nfr:<type>` | `@nfr:a11y` | security, perf, a11y, privacy, reliability. The test keeps its real `@level` |
 | Quarantine | `@quarantine:<ticket>` | `@quarantine:FLAKY-12` | Test runs in a non-gating job only |
 | Owner | `@owner:<team>` | `@owner:checkout` | Routes triage |
 | Manual | `@manual` | `@manual` | Scenario that cannot be automated. Needs a reason in the plan |
 
 ## Rules
 
-1. The Traceability Bot fails the build if a test has no `@cap`, `@req` or `@level` tag.
+1. The Traceability Bot fails the build if a test has no `@cap` or `@level` tag, or has neither `@req` nor `@nfr`.
 2. An agent must not add `@quarantine` to a T1 test without a human approval record.
 3. When a defect is fixed, the fix PR adds `@defect:<id>` to the test that proves the fix.
 4. Tag names use lower case. Values use the IDs from the source system.

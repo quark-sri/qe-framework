@@ -1,0 +1,3 @@
+{"run_id": "run-2026-11-22-01", "env": "staging", "build": "1042",
+ "test_id": "zap/baseline", "title": "DAST baseline", "level": "nfr", "nfr": "security",
+ "capability": "payments.refund", "requirements": [], "risk": "t1", "status": "passed", "duration_ms": 1}

@@ -2,6 +2,9 @@
 name: test-fixer
 description: Fixes tests and test data that the triage agent classified as test_defect or test_data_issue. Use in phase 7.
 tools: Read, Grep, Glob, Write, Edit, Bash
+kind: act
+writes: ["@tests"]
+commands: [by_tags]
 ---
 
 # Test Fixer

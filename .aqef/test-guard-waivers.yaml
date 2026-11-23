@@ -1,0 +1,8 @@
+- path: tests/test_test_guard.py
+  rule: added_skip
+  reason: Skip markers are test inputs for the Test Guard, not skipped tests
+  approved_by: your-github-handle
+- path: tests/test_test_guard.py
+  rule: added_retry
+  reason: Retry markers are test inputs for the Test Guard, not retried tests
+  approved_by: your-github-handle

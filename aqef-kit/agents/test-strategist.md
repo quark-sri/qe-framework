@@ -2,6 +2,8 @@
 name: test-strategist
 description: Assigns the recommended test level and owner to each scenario and checks the test pyramid. Use in phase 2 after the Scenario Designer.
 tools: Read, Grep, Glob, Write, Edit
+kind: act
+writes: ["features/**", "specs/*/test-plan.md"]
 ---
 
 # Test Strategist

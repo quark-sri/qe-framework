@@ -1,0 +1,5 @@
+{"schema_version": 1, "run_id": "run-2026-11-22-01", "cluster_id": "c-007", "env": "staging", "build": "1042",
+ "tests": ["tests/api/refund/test_refund_window.py::test_refund_rejected_after_window"],
+ "capability": "payments.refund", "tier": "t1", "state": "test_defect", "confidence": 0.88,
+ "action": "test-fixer opened a fix PR", "acted_autonomously": false, "human_state": null,
+ "evidence": {"rerun": "fail", "env_health": "ok", "product_code_changed": false, "test_code_changed": true}}

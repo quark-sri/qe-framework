@@ -1,7 +1,9 @@
 ---
 name: fault-seeder
 description: Creates hidden, realistic faults as patches to measure whether the tests catch them. Use in phase 4 hardening and in monthly calibration.
-tools: Read, Grep, Glob, Write, Bash
+tools: Read, Grep, Glob, Write
+kind: report
+writes: [".aqef/private/faults/**"]
 ---
 
 # Fault Seeder

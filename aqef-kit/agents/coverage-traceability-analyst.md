@@ -1,7 +1,9 @@
 ---
 name: coverage-traceability-analyst
 description: Compares planned scenarios, implemented tests, code coverage and results, and lists gaps to close. Use in phases 4 and 5.
-tools: Read, Grep, Glob, Write, Bash
+tools: Read, Grep, Glob, Write
+kind: report
+writes: ["specs/*/gaps.md"]
 ---
 
 # Coverage and Traceability Analyst

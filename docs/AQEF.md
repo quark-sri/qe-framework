@@ -18,6 +18,8 @@ AQEF does five things:
 
 AQEF is tool-agnostic. It plugs into any AI SDLC that has phases like specify, plan, tasks, implement and converge (for example GitHub Spec Kit, Amazon Kiro or BMAD). [qestack](https://github.com/quark-sri/qestack) is one reference implementation for the test review panel and quality gates. A starter kit of agent, skill and template files comes with this doc, in the [`aqef-kit/`](../aqef-kit/) folder of this repo.
 
+AQEF runs from the team's own coding-agent sessions and needs no AI API keys or tokens. It is for teams that work with coding agents such as Claude Code, Codex, Cursor or Copilot on their normal plans. See [Where agents and bots run](#where-agents-and-bots-run) and decision [AQEF-001](decisions/AQEF-001-session-first.md).
+
 ## Core principles
 
 Twelve principles control every decision in AQEF. When a process step is not clear, use these principles to decide.
@@ -92,10 +94,10 @@ Each capability gets a risk tier. The tier controls the depth of testing and the
 | Tier | Typical scope | Test depth | Human gates |
 | --- | --- | --- | --- |
 | T1 critical | Money, safety, security, privacy, legal | Full: mutation ≥ 80%, seeded faults ≥ 95%, NFR tests | All gates, always |
-| T2 important | Core user journeys | Standard: mutation ≥ 70%, seeded faults ≥ 90% | Spec and release gates; panel review if ESCALATE |
-| T3 low | Internal tools, cosmetic changes | Lite: traceability and red-before-green | Spec and release gates; 10% sample audit |
+| T2 important | Core user journeys | Standard: mutation ≥ 70%, seeded faults ≥ 90% | Spec and release gates; H3 as a non-blocking follow-up on escalation |
+| T3 low | Internal tools, cosmetic changes | Lite: traceability and red-before-green | Spec and release gates; escalations are comments; 10% sample audit as a follow-up |
 
-These thresholds are starting values. Tune them in `.aqef/config.yaml` after two or three releases.
+These thresholds are **provisional starting values**. No pilot data backs them yet. Measure your own baseline in the first month, then tune them in `.aqef/config.yaml`.
 
 ### F4. Test architecture contract
 
@@ -141,22 +143,38 @@ Each phase lists its quality activities, the agents, the outputs and the exit ga
 6. The **Test Review Panel** (for example the qestack personas) reviews the tests: shortcuts to green, hallucinated APIs, wrong oracles, flakiness, pyramid fit, maintainability, cost.
 7. **Hardening:** the Mutation Bot and the Fault Seeder check that the tests catch real faults. The Flake Bot reruns the new tests (for example 10 times) to find non-determinism.
 
-**Output:** test code, `quality-report.md` with an ACCEPT or ESCALATE result. **Exit gate H3 (human, risk-based):** a QE engineer reviews the panel report for T1, and for any ESCALATE.
+**Output:** test code, `quality-report.md` with an ACCEPT or ESCALATE result. **Exit gate H3 (human, risk-based):** a QE engineer reviews the panel report. T1: always, before merge. T2: on escalation, as a follow-up after merge. T3: on a 10% sample, as a follow-up.
 
 ### Phase 5: Converge — prove the whole change
 
 1. The **Execution Bot** runs the full affected regression in the dev container (test impact analysis selects the set; T1 runs everything).
 2. The **Failure Triage** agent classifies each failure (see the triage section). Real product defects block the merge.
 3. The **Convergence Checker** confirms that spec, code and tests agree: each criterion is implemented, tested and green.
-4. The **Quality Gatekeeper** bot applies the thresholds from the config and posts the PR quality summary.
+4. The **Test Guard** bot checks the diff. It fails the build when a test is deleted, skipped, retried or loses assertions without an approved waiver.
+5. The **Quality Gatekeeper** bot applies the thresholds from the config and posts the PR quality summary.
 
 **Exit gate:** automatic merge gate. Humans review only what the gatekeeper flags.
+
+#### Blocking budget: only facts block
+
+Decision [AQEF-002](decisions/AQEF-002-blocking-budget.md). QE must keep pace with coding agents. The gatekeeper therefore blocks a merge only on facts:
+
+| Blocks the merge (FAIL) | Escalation (routed by tier) |
+| --- | --- |
+| New product defect confirmed by triage | Mutation or seeded-fault score below the tier minimum |
+| Test Guard violation | UI share or flake rate above the limit |
+| Secrets or real personal data in tests | NFR result missing or failed |
+| Red-before-green evidence missing | Review panel ESCALATE or low test quality score |
+| Acceptance criteria coverage below the tier minimum | Waived Test Guard violations |
+| A required metric is missing (a bot did not report) | |
+
+Each tier's `on_escalate` setting routes escalations: `block` (T1: the merge waits for a human), `follow_up` (T2: merge, and CI opens a follow-up task for H3) or `comment` (T3: a comment only). A missing required metric is a FAIL, never a PASS, so a broken bot cannot let bugs through.
 
 ### Phase 6: Deploy and run
 
 1. After each deployment, CI runs smoke, then the regression suite for that environment.
 2. The **Results Normalizer** bot converts all results (JUnit XML, Allure, Playwright, k6, ZAP, axe) into one schema with tags.
-3. The **Failure Triage** agent runs on every failure (next sections).
+3. CI publishes the normalized results and the failure list as build artifacts. A person on the triage rota runs the `aqef-triage` skill in their coding agent on those results (next sections).
 
 ### Phase 7: Triage and fix
 
@@ -202,9 +220,21 @@ AQEF uses two kinds of workers. **Agents** are LLM workers for judgement. **Bots
 | Traceability Bot | Builds the matrix from tags: criterion → scenario → test → last result |
 | Mutation Bot | Runs mutation testing (for example PIT, Stryker, mutmut) on changed code |
 | Flake Bot | Reruns tests, computes flake rate, manages the quarantine list |
-| Test Guard | Blocks diffs that delete, skip or weaken tests without an approved reason |
-| Quality Gatekeeper | Reads `.aqef/config.yaml`, compares metrics with thresholds, sets pass, fail or escalate |
+| Test Guard | Blocks diffs that delete, skip or weaken tests without an approved reason (sample in the kit: `bots/testguard.py`) |
+| Quality Gatekeeper | Reads `.aqef/config.yaml`, compares metrics with thresholds, sets PASS, FOLLOW_UP, FAIL or ESCALATE (sample in the kit: `bots/gatekeeper.py`) |
 | Report Builder | Builds the layer and capability dashboards from normalized results |
+
+### Where agents and bots run
+
+AQEF does not need AI API keys, tokens or a model account for CI (decision [AQEF-001](decisions/AQEF-001-session-first.md): session-first for this phase).
+
+| Worker | Runs where | Needs |
+| --- | --- | --- |
+| LLM agents and skills | In the coding agent that a developer or QE engineer already uses (Claude Code, Codex, Cursor, Copilot), in their own session | The team's normal coding-agent plan |
+| Deterministic bots | In CI or on a laptop | Python, test tools; no LLM |
+| Human gates | Pull request reviews, issue tracker | People |
+
+Phases that run after CI (triage, reporting) work the same way. CI produces the facts: normalized results, failure list, gatekeeper decision. A person runs the skill in their coding agent on those artifacts. Teams that already run a coding agent unattended in CI can automate these steps. The current version of AQEF does not require it, and its artifacts are plain files, so automation can be added later without changes.
 
 ### Context rules for every agent
 
@@ -242,7 +272,7 @@ You can rely on an agent when you have measured how often it is right. AQEF give
 | --- | --- | --- | --- | --- |
 | H1 Requirement review | Phase 1, always | Product owner, QE lead | Acceptance criteria and risk tier approved | `spec-review.md`, risk list |
 | H2 Test plan review | Phase 2; T1 always, T2 on ESCALATE, T3 10% sample | QE engineer, domain expert | Scenarios and levels approved | Feature files, level matrix, panel findings |
-| H3 Test review after implementation | Phase 4; T1 always, others on ESCALATE | QE engineer | Tests accepted | `quality-report.md`, mutation and fault scores |
+| H3 Test review after implementation | Phase 4; T1 always (blocks merge); T2 on escalation and T3 on a 10% sample (follow-up after merge) | QE engineer | Tests accepted | `quality-report.md`, mutation and fault scores |
 | H4 Release readiness | Phase 8, always | Release owner, QE lead | Go or no-go | Layer and capability report, open defects, NFR results |
 | H5 Triage confirmation | Phase 7, below the confidence bar | QE engineer on triage rota | State and action confirmed | Triage record with evidence |
 | H6 Knowledge base change | Any time | Domain expert | KB PR merged | Curator diff and source |
@@ -340,7 +370,8 @@ Automated accessibility checks find only part of the issues. Keep a human audit 
 | Test strength | Seeded faults detected | T1 ≥ 95%, T2 ≥ 90% |
 | Pyramid | Share of tests at UI level | ≤ 10% of tests |
 | Stability | Flake rate in gating suites | < 1% |
-| Speed | PR feedback time | ≤ 15 min for the gating suite |
+| Speed | QE time added to PR feedback | T2 and T3 ≤ 10 min, T1 ≤ 20 min; a target, not a gate ([AQEF-004](decisions/AQEF-004-speed-budget.md)) |
+| Speed | Human gate response time | H3, H5 ≤ 4 working hours; H1, H2 ≤ 1 working day; never auto-approved ([AQEF-004](decisions/AQEF-004-speed-budget.md)) |
 | Triage | Mean time to triage a failure | < 1 hour |
 | Triage | Triage accuracy against human audit | ≥ 95% before L3 |
 | Outcome | Escaped defects per release, by capability | Falls each quarter |
@@ -358,7 +389,7 @@ All targets are starting points. Set your own baseline in the first month, then 
 | Knowledge base | Index, glossary, top 5 capabilities | Full ontology with owners and review dates |
 | Plan phase | Scenario Designer + Test Strategist; panel optional | All plan agents + Test Plan Reviewer panel |
 | Implement phase | Red-before-green, traceability, Test Guard | Plus mutation, seeded faults, flake reruns, full panel |
-| Human gates | H1 and H4 always; H2 and H3 on ESCALATE | All gates per the tier table; audit trail stored |
+| Human gates | H1 and H4 always; H2 and H3 as follow-ups on escalation | All gates per the tier table; audit trail stored |
 | Triage | Triage agent at L1 (recommend only) | Triage agent promoted per state as accuracy grows |
 | Reports | Run summary, delta, capability view | All views plus agent performance and audit export |
 

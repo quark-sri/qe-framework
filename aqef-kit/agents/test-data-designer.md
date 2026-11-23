@@ -2,6 +2,8 @@
 name: test-data-designer
 description: Designs synthetic test data for each scenario from KB entities and rules. Use in phase 2 after levels are set.
 tools: Read, Grep, Glob, Write
+kind: act
+writes: ["specs/*/test-data-plan.md"]
 ---
 
 # Test Data Designer

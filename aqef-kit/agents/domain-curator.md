@@ -2,6 +2,8 @@
 name: domain-curator
 description: Proposes updates to the domain knowledge base from specs, triage records and escaped defects. Use in phases 0, 1 and 8.
 tools: Read, Grep, Glob, Write, Edit
+kind: act
+writes: ["domain/**"]
 ---
 
 # Domain Curator

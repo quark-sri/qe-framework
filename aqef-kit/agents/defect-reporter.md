@@ -2,6 +2,8 @@
 name: defect-reporter
 description: Writes a complete, de-duplicated defect ticket from a triage record. Use in phase 7 for product_defect_new.
 tools: Read, Grep, Glob, Write
+kind: act
+writes: ["triage/**"]
 ---
 
 # Defect Reporter

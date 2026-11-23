@@ -3,33 +3,138 @@
   "$id": "https://aqef.dev/schemas/triage-record.schema.json",
   "title": "AQEF triage record (front matter of triage/<run-id>/<cluster-id>.md)",
   "type": "object",
-  "required": ["run_id", "cluster_id", "env", "tests", "capability", "tier", "state", "confidence", "action", "acted_autonomously"],
+  "required": [
+    "run_id",
+    "cluster_id",
+    "env",
+    "tests",
+    "capability",
+    "tier",
+    "state",
+    "confidence",
+    "action",
+    "acted_autonomously"
+  ],
   "properties": {
-    "run_id": {"type": "string"},
-    "cluster_id": {"type": "string"},
-    "env": {"type": "string"},
-    "build": {"type": "string"},
-    "tests": {"type": "array", "items": {"type": "string"}, "minItems": 1},
-    "capability": {"type": "string"},
-    "tier": {"enum": ["t1", "t2", "t3"]},
-    "state": {"enum": ["product_defect_new", "known_defect", "regression_of_fixed_defect", "test_defect", "expected_change", "test_data_issue", "environment", "flaky", "needs_investigation"]},
-    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
-    "action": {"type": "string"},
-    "acted_autonomously": {"type": "boolean"},
-    "human_state": {"enum": ["product_defect_new", "known_defect", "regression_of_fixed_defect", "test_defect", "expected_change", "test_data_issue", "environment", "flaky", "needs_investigation", "", null]},
-    "defect_id": {"type": ["string", "null"]},
+    "schema_version": {
+      "const": 1
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "cluster_id": {
+      "type": "string"
+    },
+    "env": {
+      "type": "string"
+    },
+    "build": {
+      "type": "string"
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "capability": {
+      "type": "string"
+    },
+    "tier": {
+      "enum": [
+        "t1",
+        "t2",
+        "t3"
+      ]
+    },
+    "state": {
+      "enum": [
+        "product_defect_new",
+        "known_defect",
+        "regression_of_fixed_defect",
+        "test_defect",
+        "expected_change",
+        "test_data_issue",
+        "environment",
+        "flaky",
+        "needs_investigation"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "action": {
+      "type": "string"
+    },
+    "acted_autonomously": {
+      "type": "boolean"
+    },
+    "human_state": {
+      "enum": [
+        "product_defect_new",
+        "known_defect",
+        "regression_of_fixed_defect",
+        "test_defect",
+        "expected_change",
+        "test_data_issue",
+        "environment",
+        "flaky",
+        "needs_investigation",
+        "",
+        null
+      ]
+    },
+    "defect_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "evidence": {
       "type": "object",
       "properties": {
-        "rerun": {"enum": ["pass", "fail", "not_run"]},
-        "env_health": {"enum": ["ok", "degraded", "down", "unknown"]},
-        "product_code_changed": {"type": "boolean"},
-        "test_code_changed": {"type": "boolean"},
-        "test_data_changed": {"type": "boolean"},
-        "spec_or_kb_changed": {"type": "boolean"},
-        "matched_defect": {"type": ["string", "null"]},
-        "history_pass": {"type": "integer"},
-        "history_fail": {"type": "integer"}
+        "rerun": {
+          "enum": [
+            "pass",
+            "fail",
+            "not_run"
+          ]
+        },
+        "env_health": {
+          "enum": [
+            "ok",
+            "degraded",
+            "down",
+            "unknown"
+          ]
+        },
+        "product_code_changed": {
+          "type": "boolean"
+        },
+        "test_code_changed": {
+          "type": "boolean"
+        },
+        "test_data_changed": {
+          "type": "boolean"
+        },
+        "spec_or_kb_changed": {
+          "type": "boolean"
+        },
+        "matched_defect": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "history_pass": {
+          "type": "integer"
+        },
+        "history_fail": {
+          "type": "integer"
+        }
       }
     }
   }

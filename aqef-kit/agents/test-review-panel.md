@@ -1,7 +1,9 @@
 ---
 name: test-review-panel
 description: Read-only expert panel that reviews implemented tests and produces an ACCEPT or ESCALATE quality report. Use at the end of phase 4. Can delegate to qestack personas.
-tools: Read, Grep, Glob, Write, Bash
+tools: Read, Grep, Glob, Write
+kind: report
+writes: ["specs/*/quality-report.md"]
 ---
 
 # Test Review Panel
