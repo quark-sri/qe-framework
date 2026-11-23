@@ -370,7 +370,8 @@ Automated accessibility checks find only part of the issues. Keep a human audit 
 | Test strength | Seeded faults detected | T1 ≥ 95%, T2 ≥ 90% |
 | Pyramid | Share of tests at UI level | ≤ 10% of tests |
 | Stability | Flake rate in gating suites | < 1% |
-| Speed | PR feedback time | ≤ 15 min for the gating suite |
+| Speed | QE time added to PR feedback | T2 and T3 ≤ 10 min, T1 ≤ 20 min; a target, not a gate ([AQEF-004](decisions/AQEF-004-speed-budget.md)) |
+| Speed | Human gate response time | H3, H5 ≤ 4 working hours; H1, H2 ≤ 1 working day; never auto-approved ([AQEF-004](decisions/AQEF-004-speed-budget.md)) |
 | Triage | Mean time to triage a failure | < 1 hour |
 | Triage | Triage accuracy against human audit | ≥ 95% before L3 |
 | Outcome | Escaped defects per release, by capability | Falls each quarter |

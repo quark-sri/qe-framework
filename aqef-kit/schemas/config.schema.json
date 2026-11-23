@@ -70,8 +70,18 @@
         "red_before_green_required": {"type": "boolean", "x-aqef-enforced-by": "gatekeeper"},
         "ui_share_max": {"$ref": "#/$defs/fraction", "x-aqef-enforced-by": "gatekeeper"},
         "gating_flake_rate_max": {"$ref": "#/$defs/fraction", "x-aqef-enforced-by": "gatekeeper"},
-        "pr_feedback_minutes_max": {"type": "number", "minimum": 0, "x-aqef-enforced-by": "humans"},
         "quarantine_max_sprints": {"type": "integer", "minimum": 0, "x-aqef-enforced-by": "bot-contract"}
+      }
+    },
+    "speed_budget": {
+      "type": "object",
+      "description": "AQEF-004. Targets that drive improvement; never a reason to fail a build or to auto-approve a gate.",
+      "x-aqef-enforced-by": "mixed",
+      "additionalProperties": false,
+      "properties": {
+        "pr_minutes": {"type": "object", "propertyNames": {"pattern": "^t[0-9]+$"}, "additionalProperties": {"type": "number", "minimum": 0}, "x-aqef-enforced-by": "humans"},
+        "gate_response_hours": {"type": "object", "propertyNames": {"$ref": "#/$defs/gate_id"}, "additionalProperties": {"type": "number", "minimum": 0}, "x-aqef-enforced-by": "humans"},
+        "on_gate_timeout": {"const": "backup_reviewer", "x-aqef-enforced-by": "humans"}
       }
     },
     "test_guard": {

@@ -18,6 +18,10 @@ CI runs the same checks, and the Test Guard runs on every pull request. A pull r
 | New optional agent, skill, template, config key with a default, bot | Pull request with a CHANGELOG entry | Minor |
 | Change to a principle (P1–P12), a blocking rule, a required config key, a schema field, or a bot exit code | RFC issue first, then a pull request | Major (minor while the version is 0.x) |
 
+## Share your numbers (opt-in)
+
+AQEF collects no data automatically ([AQEF-005](docs/decisions/AQEF-005-adopter-feedback.md)). To help tune the defaults, open an issue with the "Adopter scorecard" template. Share aggregate numbers only: no code, ticket text or names. The maintainer reviews scorecards each quarter.
+
 ## Decisions
 
 Framework decisions live in `docs/decisions/` (`AQEF-nnn`). To change one, follow the `aqef-decision-change` skill: change the decision file first, then the files that cite it. Changing a decision with `scope: permanent` needs an RFC.

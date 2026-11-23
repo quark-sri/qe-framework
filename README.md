@@ -27,6 +27,7 @@ AQEF is tool-agnostic. It plugs into any spec-driven AI SDLC (GitHub Spec Kit, A
 | Test Guard (`bots/testguard.py`) | Working sample, tested |
 | Results Normalizer, Traceability Bot, Report Builder, Data Guard | Contracts only (see [`ROADMAP.md`](ROADMAP.md)) |
 | Thresholds (mutation, seeded faults, confidence bars) | **Provisional.** Not calibrated on pilot data yet |
+| AI-product testing (evals, model and prompt regression, AI safety) | Planned for milestone v0.5, narrow first version ([AQEF-003](docs/decisions/AQEF-003-ai-product-track.md)) |
 | Coding agents | Claude Code format. Other agents can read the markdown; an `AGENTS.md` entry point is planned |
 
 ## Repository layout

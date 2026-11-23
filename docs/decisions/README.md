@@ -14,6 +14,9 @@ These are the framework's own decisions, numbered `AQEF-nnn`. A team that adopts
 | --- | --- | --- | --- |
 | [AQEF-001](AQEF-001-session-first.md) | Session-first: agents run in the team's own coding-agent sessions | This phase | Accepted |
 | [AQEF-002](AQEF-002-blocking-budget.md) | Blocking budget: only facts block a merge, and the gate fails closed | Permanent | Accepted |
+| [AQEF-003](AQEF-003-ai-product-track.md) | AI-product track in scope, narrow first version | This phase | Accepted |
+| [AQEF-004](AQEF-004-speed-budget.md) | Speed budget: targets for QE time and gate response, never auto-approve | This phase | Accepted |
+| [AQEF-005](AQEF-005-adopter-feedback.md) | Adopter feedback: opt-in manual scorecards, no automatic collection | This phase | Accepted |
 
 ## File format
 

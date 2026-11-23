@@ -21,6 +21,19 @@ The Quality Gatekeeper and the Test Guard have sample implementations. The other
 - [ ] Packaging as a Claude Code plugin, like qestack.
 - [ ] Release workflow that builds `aqef-kit.zip` from the folder.
 
+## AI-product track (AQEF-003, milestone v0.5)
+
+For teams whose product calls a model. The first version covers what catches bugs at PR time:
+
+- [ ] Eval sets as tests (golden and adversarial), versioned with the prompt.
+- [ ] Statistical pass rule over N runs, and a `model_variance` triage state.
+- [ ] Graders: deterministic first, then LLM-as-judge with a pinned judge model.
+- [ ] Regression trigger on prompt, model or retrieval-index changes.
+- [ ] Required prompt-injection and data-leak safety set.
+- [ ] Kit: `eval-designer` agent, `aqef-eval` skill, `eval` level and result fields, `@nfr:ai-safety`.
+
+Later: production drift monitoring, red-team agent, bias and fairness suites, RAG split metrics.
+
 ## Framework
 
 - [ ] Calibrate the starting thresholds (mutation, seeded faults, confidence bars) on a pilot and publish the data.

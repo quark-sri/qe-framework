@@ -18,10 +18,13 @@ Theme: a fast, safe gate. QE blocks only on facts, never passes on missing data,
 - `check_kit.py --root`, and tests that break a copy of the kit to prove each check works.
 - **Decision registry** (`docs/decisions/`): one home per decision (`AQEF-001` session-first, `AQEF-002` blocking budget). Other files cite the ID. `check_kit.py` fails when a file states a decision without citing it, cites an unknown or superseded decision, or brings back retired wording.
 - `aqef-decision-change` skill and `templates/decision.md`, so adopting teams can keep their own decisions (`D-nnn`) consistent the same way. `paths.decisions` in the config.
+- Decisions AQEF-003 (AI-product track, narrow v1), AQEF-004 (speed budget) and AQEF-005 (opt-in adopter scorecards), with an "Adopter scorecard" issue template.
+- `speed_budget` config section: PR time targets per tier, gate response targets, and `on_gate_timeout: backup_reviewer` (the only allowed value).
 - `AGENTS.md` (and `CLAUDE.md`, which imports it) with instructions for coding agents working in this repo.
 - `CHANGELOG.md`, `CONTRIBUTING.md`, `pytest.ini`, `aqef-kit/bots/requirements.txt`. README status table.
 
 ### Changed
+- **Breaking:** `suite_rules.pr_feedback_minutes_max` is replaced by `speed_budget` (AQEF-004).
 - **Breaking:** config key `version: 1` is now `config_version: 2`, plus `aqef_version`. New required sections `gate` and per-tier `on_escalate`.
 - **Breaking:** the gatekeeper fails when a metric in `gate.required_metrics` is missing. Before, it treated a missing `new_product_defects`, `test_guard_violations`, `flake_rate` or `ui_share` as 0 and could PASS.
 - **Breaking:** metrics files need `schema_version: 1` and `feature`.

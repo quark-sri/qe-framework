@@ -84,6 +84,10 @@ D1 = "docs/decisions/AQEF-001-session-first.md"
      "scope must be phase or permanent"),
     (D1, "id: AQEF-001", "id: AQEF-002",
      "duplicate decision id 'AQEF-002'"),
+    ("aqef-kit/.aqef/config.yaml", "on_gate_timeout: backup_reviewer", "on_gate_timeout: auto_approve",
+     "config: speed_budget/on_gate_timeout"),
+    ("aqef-kit/.aqef/config.yaml", "  quarantine_max_sprints: 2", "  quarantine_max_sprints: 2\n  pr_feedback_minutes_max: 15",
+     "contains retired wording of AQEF-004: 'pr_feedback_minutes_max'"),
 ])
 def test_check_catches_decision_problem(kit_copy, file, old, new, expected):
     edit(kit_copy / file, old, new)

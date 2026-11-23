@@ -63,8 +63,13 @@ suite_rules:
   red_before_green_required: true
   ui_share_max: 0.10                 # share of tests at UI level
   gating_flake_rate_max: 0.01
-  pr_feedback_minutes_max: 15
   quarantine_max_sprints: 2
+
+# Speed budget (AQEF framework decision AQEF-004). Targets, not gates: missing them never fails a build.
+speed_budget:
+  pr_minutes: {t1: 20, t2: 10, t3: 10}            # QE time added to PR feedback
+  gate_response_hours: {H1: 8, H2: 8, H3: 4, H5: 4}   # working hours
+  on_gate_timeout: backup_reviewer                # the only allowed value: a late gate is never auto-approved
 
 # Test Guard: blocks diffs that delete, skip or weaken tests.
 test_guard:
