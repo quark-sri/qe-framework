@@ -17,10 +17,10 @@ description: AQEF phase 4. Implements automated tests from the approved plan, pr
    - Mutation Bot on changed code.
    - `fault-seeder`, then Execution Bot applies each fault.
    - Flake Bot reruns new tests (`flake_reruns` from config).
-   - Test Guard checks the diff for weakened, skipped or deleted tests.
+   - Test Guard (`bots/testguard.py`) checks the diff for deleted, skipped, retried or weakened tests.
 9. Run `test-review-panel` in a fresh context. Output: `quality-report.md` with ACCEPT or ESCALATE.
 10. Gatekeeper bot compares metrics with thresholds.
-11. Apply gate H3 rules (T1 always; others on ESCALATE).
+11. Apply gate H3 rules (AQEF-002): T1 always, before merge; T2 on escalation and T3 on sample, as a follow-up after merge.
 
 ## Exit criteria
 - Quality report is ACCEPT, or H3 approves the exceptions.

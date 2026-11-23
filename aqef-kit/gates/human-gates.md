@@ -1,13 +1,14 @@
 # Human quality gates
 
 Each gate gets a ranked agent report with evidence. The reviewer must not need to read everything.
+A gate blocks the merge only when the tier says so (`on_escalate` in `.aqef/config.yaml`). Otherwise it runs as a follow-up after merge, so QE does not slow down the agents (AQEF-002).
 Record each decision in the gate log of the feature (`specs/<feature>/gates.md`): gate, date, reviewer, decision, notes.
 
 | Gate | Phase | When | Who |
 | --- | --- | --- | --- |
 | H1 Requirement review | 1 Specify | Always | Product owner, QE lead |
 | H2 Test plan review | 2 Plan | T1 always; T2 on ESCALATE; T3 10% sample | QE engineer, domain expert |
-| H3 Test review after implementation | 4 Implement | T1 always; others on ESCALATE | QE engineer |
+| H3 Test review after implementation | 4 Implement | T1 always, before merge; T2 on escalation and T3 on a 10% sample, as a follow-up after merge | QE engineer |
 | H4 Release readiness | 8 Report | Always | Release owner, QE lead |
 | H5 Triage confirmation | 7 Triage | Confidence below the bar, or a never-autonomous state | QE engineer on triage rota |
 | H6 Knowledge base change | Any | Every KB PR | Domain expert |

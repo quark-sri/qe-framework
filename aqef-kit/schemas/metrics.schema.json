@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aqef.dev/schemas/metrics.schema.json",
+  "title": "AQEF gate metrics for one feature or pull request",
+  "description": "Input to the Quality Gatekeeper. Bots in CI write this file; agents must not. Which metrics are required is set by gate.required_metrics in .aqef/config.yaml. A missing required metric is a FAIL, not a PASS.",
+  "type": "object",
+  "required": ["schema_version", "feature", "tier"],
+  "additionalProperties": false,
+  "$defs": {
+    "fraction": {"type": "number", "minimum": 0, "maximum": 1},
+    "count": {"type": "integer", "minimum": 0}
+  },
+  "properties": {
+    "schema_version": {"const": 1},
+    "feature": {"type": "string", "minLength": 1, "description": "Feature, spec or PR ID. Also used to pick the T3 audit sample"},
+    "tier": {"type": "string", "pattern": "^t[0-9]+$"},
+    "criteria_coverage": {"$ref": "#/$defs/fraction"},
+    "red_before_green_all": {"type": "boolean"},
+    "mutation_score": {"$ref": "#/$defs/fraction"},
+    "seeded_fault_detection": {"$ref": "#/$defs/fraction"},
+    "ui_share": {"$ref": "#/$defs/fraction"},
+    "flake_rate": {"$ref": "#/$defs/fraction"},
+    "test_guard_violations": {"$ref": "#/$defs/count"},
+    "test_guard_waived": {"$ref": "#/$defs/count", "description": "Violations with a waiver. A human confirms them"},
+    "data_guard_violations": {"$ref": "#/$defs/count", "description": "Secrets or real personal data found in tests or fixtures"},
+    "new_product_defects": {"$ref": "#/$defs/count"},
+    "panel_result": {"enum": ["ACCEPT", "ESCALATE"]},
+    "test_quality_score": {"type": "number", "minimum": 0, "maximum": 100},
+    "nfr_results": {
+      "type": "object",
+      "additionalProperties": {"enum": ["pass", "fail"]}
+    }
+  }
+}

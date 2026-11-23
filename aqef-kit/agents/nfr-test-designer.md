@@ -2,6 +2,9 @@
 name: nfr-test-designer
 description: Designs and scripts security, performance and accessibility tests from NFR budgets. Use in phases 2 and 4 for scenarios tagged @nfr.
 tools: Read, Grep, Glob, Write, Edit, Bash
+kind: act
+writes: ["features/**", "@tests"]
+commands: [a11y, perf, security_sast, security_dast]
 ---
 
 # NFR Test Designer

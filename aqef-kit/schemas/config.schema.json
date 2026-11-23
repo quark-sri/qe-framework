@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aqef.dev/schemas/config.schema.json",
+  "title": "AQEF configuration (.aqef/config.yaml)",
+  "description": "Every property says who enforces it in x-aqef-enforced-by: gatekeeper or test-guard (shipped bots), bot-contract (a bot you build), agents (instructions only), humans (gate checklists), kit (paths and tooling), or mixed (a container).",
+  "type": "object",
+  "required": ["config_version", "aqef_version", "gate", "tiers", "suite_rules", "autonomy", "triage"],
+  "additionalProperties": false,
+  "$defs": {
+    "fraction": {"type": "number", "minimum": 0, "maximum": 1},
+    "gate_id": {"enum": ["H1", "H2", "H3", "H4", "H5", "H6"]},
+    "level": {"enum": ["L0", "L1", "L2", "L3", "L4"]},
+    "tier": {
+      "type": "object",
+      "required": ["description", "criteria_coverage_min", "human_gates", "on_escalate"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {"type": "string", "x-aqef-enforced-by": "humans"},
+        "mutation_score_min": {"anyOf": [{"$ref": "#/$defs/fraction"}, {"type": "null"}], "x-aqef-enforced-by": "gatekeeper"},
+        "seeded_fault_detection_min": {"anyOf": [{"$ref": "#/$defs/fraction"}, {"type": "null"}], "x-aqef-enforced-by": "gatekeeper"},
+        "criteria_coverage_min": {"$ref": "#/$defs/fraction", "x-aqef-enforced-by": "gatekeeper"},
+        "flake_reruns": {"type": "integer", "minimum": 0, "x-aqef-enforced-by": "bot-contract"},
+        "nfr_required": {"type": "array", "items": {"type": "string"}, "x-aqef-enforced-by": "gatekeeper"},
+        "human_gates": {"type": "array", "items": {"$ref": "#/$defs/gate_id"}, "x-aqef-enforced-by": "gatekeeper"},
+        "escalate_gates": {"type": "array", "items": {"$ref": "#/$defs/gate_id"}, "x-aqef-enforced-by": "gatekeeper"},
+        "on_escalate": {"enum": ["block", "follow_up", "comment"], "x-aqef-enforced-by": "gatekeeper"},
+        "sample_audit_rate": {"$ref": "#/$defs/fraction", "x-aqef-enforced-by": "gatekeeper"}
+      }
+    }
+  },
+  "properties": {
+    "config_version": {"const": 2, "x-aqef-enforced-by": "gatekeeper"},
+    "aqef_version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$", "x-aqef-enforced-by": "kit"},
+    "paths": {
+      "type": "object",
+      "x-aqef-enforced-by": "mixed",
+      "additionalProperties": false,
+      "properties": {
+        "domain_kb": {"type": "string", "x-aqef-enforced-by": "agents"},
+        "features": {"type": "string", "x-aqef-enforced-by": "agents"},
+        "specs": {"type": "string", "x-aqef-enforced-by": "agents"},
+        "triage": {"type": "string", "x-aqef-enforced-by": "agents"},
+        "reports": {"type": "string", "x-aqef-enforced-by": "agents"},
+        "decisions": {"type": "string", "x-aqef-enforced-by": "agents"},
+        "test_architecture": {"type": "string", "x-aqef-enforced-by": "agents"}
+      }
+    },
+    "gate": {
+      "type": "object",
+      "x-aqef-enforced-by": "mixed",
+      "required": ["required_metrics"],
+      "additionalProperties": false,
+      "properties": {
+        "required_metrics": {"type": "array", "items": {"type": "string"}, "minItems": 1, "x-aqef-enforced-by": "gatekeeper"},
+        "advisory_metrics": {"type": "array", "items": {"type": "string"}, "x-aqef-enforced-by": "gatekeeper"}
+      }
+    },
+    "tiers": {
+      "type": "object",
+      "x-aqef-enforced-by": "mixed",
+      "propertyNames": {"pattern": "^t[0-9]+$"},
+      "minProperties": 1,
+      "additionalProperties": {"$ref": "#/$defs/tier"}
+    },
+    "suite_rules": {
+      "type": "object",
+      "x-aqef-enforced-by": "mixed",
+      "additionalProperties": false,
+      "properties": {
+        "red_before_green_required": {"type": "boolean", "x-aqef-enforced-by": "gatekeeper"},
+        "ui_share_max": {"$ref": "#/$defs/fraction", "x-aqef-enforced-by": "gatekeeper"},
+        "gating_flake_rate_max": {"$ref": "#/$defs/fraction", "x-aqef-enforced-by": "gatekeeper"},
+        "pr_feedback_minutes_max": {"type": "number", "minimum": 0, "x-aqef-enforced-by": "humans"},
+        "quarantine_max_sprints": {"type": "integer", "minimum": 0, "x-aqef-enforced-by": "bot-contract"}
+      }
+    },
+    "test_guard": {
+      "type": "object",
+      "x-aqef-enforced-by": "mixed",
+      "additionalProperties": false,
+      "properties": {
+        "include": {"type": "array", "items": {"type": "string"}, "minItems": 1, "x-aqef-enforced-by": "test-guard"},
+        "waivers": {"type": "string", "x-aqef-enforced-by": "test-guard"}
+      }
+    },
+    "review_panel": {
+      "type": "object",
+      "x-aqef-enforced-by": "mixed",
+      "additionalProperties": false,
+      "properties": {
+        "provider": {"enum": ["aqef", "qestack", "custom"], "x-aqef-enforced-by": "agents"},
+        "personas": {"type": "array", "items": {"type": "string"}, "x-aqef-enforced-by": "agents"},
+        "accept_score_min": {"type": "number", "minimum": 0, "maximum": 100, "x-aqef-enforced-by": "gatekeeper"}
+      }
+    },
+    "autonomy": {
+      "type": "object",
+      "x-aqef-enforced-by": "mixed",
+      "required": ["agents"],
+      "additionalProperties": false,
+      "properties": {
+        "promotion": {
+          "type": "object",
+          "x-aqef-enforced-by": "humans",
+          "properties": {
+            "min_decisions": {"type": "integer", "minimum": 1, "x-aqef-enforced-by": "humans"},
+            "window_days": {"type": "integer", "minimum": 1, "x-aqef-enforced-by": "humans"},
+            "min_audit_agreement": {"$ref": "#/$defs/fraction", "x-aqef-enforced-by": "humans"},
+            "no_t1_miss": {"type": "boolean", "x-aqef-enforced-by": "humans"}
+          }
+        },
+        "demotion": {
+          "type": "object",
+          "x-aqef-enforced-by": "humans",
+          "properties": {
+            "on_t1_miss": {"type": "boolean", "x-aqef-enforced-by": "humans"},
+            "audit_agreement_below": {"$ref": "#/$defs/fraction", "x-aqef-enforced-by": "humans"}
+          }
+        },
+        "agents": {
+          "type": "object",
+          "x-aqef-enforced-by": "agents",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {"$ref": "#/$defs/level"}
+          }
+        }
+      }
+    },
+    "triage": {
+      "type": "object",
+      "x-aqef-enforced-by": "mixed",
+      "required": ["confidence_bars"],
+      "additionalProperties": false,
+      "properties": {
+        "rerun_count": {"type": "integer", "minimum": 0, "x-aqef-enforced-by": "agents"},
+        "confidence_bars": {"type": "object", "additionalProperties": {"$ref": "#/$defs/fraction"}, "x-aqef-enforced-by": "agents"},
+        "never_autonomous": {"type": "array", "items": {"type": "string"}, "x-aqef-enforced-by": "agents"},
+        "t1_requires_human": {"type": "array", "items": {"type": "string"}, "x-aqef-enforced-by": "agents"}
+      }
+    },
+    "commands": {
+      "type": "object",
+      "x-aqef-enforced-by": "kit",
+      "additionalProperties": {"type": "string"}
+    }
+  }
+}

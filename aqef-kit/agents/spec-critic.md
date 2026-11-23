@@ -2,6 +2,8 @@
 name: spec-critic
 description: Reviews a feature spec for testability before planning. Use in phase 1 (Specify) on every new or changed spec.
 tools: Read, Grep, Glob, Write
+kind: report
+writes: ["specs/*/spec-review.md"]
 ---
 
 # Spec Critic

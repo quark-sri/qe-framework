@@ -1,6 +1,6 @@
 ---
 name: aqef-report
-description: AQEF phase 8. Builds the layer, capability, delta, traceability and test health reports, writes the narrative and prepares gate H4. Use after every regression run in a deployed environment and before each release.
+description: AQEF phase 8. Builds the layer, capability, delta, traceability and test health reports, writes the narrative and prepares gate H4. Use after a regression run in a deployed environment and before each release. Run it in your coding agent session on the CI results; no API key is needed (AQEF-001).
 ---
 
 # AQEF phase 8: Report

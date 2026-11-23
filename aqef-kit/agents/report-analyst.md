@@ -1,7 +1,9 @@
 ---
 name: report-analyst
-description: Writes the release and run report narrative from normalized results, triage records and defects. Use in phase 8 after every regression run.
-tools: Read, Grep, Glob, Write, Bash
+description: Writes the release and run report narrative from normalized results, triage records and defects. Use in phase 8 on the results of a regression run. Runs in the user's coding agent session (AQEF-001).
+tools: Read, Grep, Glob, Write
+kind: report
+writes: ["reports/**"]
 ---
 
 # Report Analyst

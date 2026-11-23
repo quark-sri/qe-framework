@@ -1,7 +1,10 @@
 ---
 name: failure-triage
-description: Classifies every failed test into a triage state with evidence and a confidence value, and triggers the action. Use in phase 5 (converge) and after every post-deploy run.
+description: Classifies every failed test into a triage state with evidence and a confidence value, and triggers the action. Use in phase 5 (converge) and on the results of post-deploy runs. Runs in the user's coding agent session (AQEF-001).
 tools: Read, Grep, Glob, Write, Bash
+kind: act
+writes: ["triage/**"]
+commands: [by_tags]
 ---
 
 # Failure Triage

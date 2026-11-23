@@ -2,6 +2,21 @@
 
 Each file defines one LLM agent. The front matter follows the Claude Code subagent format (`name`, `description`, `tools`). Other agent tools can load the body as instructions.
 
+## Permission contract (front matter)
+
+| Key | Meaning | Who enforces it |
+| --- | --- | --- |
+| `tools` | Tools the agent may use | The host tool (Claude Code enforces it per subagent) |
+| `kind` | `report`: only writes a report. `act`: changes files in the repo | `scripts/check_kit.py` |
+| `writes` | Paths the agent may write. `@tests` means the test folders named in `qa/test-architecture.md` | `scripts/check_kit.py`; code review |
+| `commands` | Keys from `commands:` in `.aqef/config.yaml` that the agent may run with Bash | `scripts/check_kit.py`; code review |
+
+Rules that `check_kit.py` checks:
+- A `report` agent has no `Edit` or `Bash` tool and writes only under `specs/`, `triage/`, `reports/` or `.aqef/private/`.
+- An agent with `Bash` lists its allowed `commands`, and each one exists in the config.
+
+Path limits (`writes`) are a contract, not a sandbox: most coding agents cannot limit writes per subagent. Run agents that have Bash in a container or worktree, and let the Test Guard and code review catch changes outside `writes`.
+
 | Agent | Phase | Writes |
 | --- | --- | --- |
 | spec-critic | 1 | `spec-review.md` |

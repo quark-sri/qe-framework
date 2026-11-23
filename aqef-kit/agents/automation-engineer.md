@@ -2,6 +2,9 @@
 name: automation-engineer
 description: Implements automated tests from tagged Gherkin scenarios, following the test architecture contract. Use in phase 4. Run one instance per level (component, contract, integration, api, ui).
 tools: Read, Grep, Glob, Write, Edit, Bash
+kind: act
+writes: ["@tests", "specs/*/runs/**"]
+commands: [unit, integration, api, ui, by_tags]
 ---
 
 # Automation Engineer

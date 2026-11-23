@@ -1,7 +1,10 @@
-# AQEF configuration. The Quality Gatekeeper bot reads this file.
-# All numbers are starting values. Tune them after two or three releases.
+# AQEF configuration. The Quality Gatekeeper and the Test Guard read this file.
+# All thresholds are PROVISIONAL starting values, not calibrated targets.
+# Measure your own baseline in the first month, then tune them.
+# schemas/config.schema.json describes every key and says which bot, agent or human enforces it.
 
-version: 1
+config_version: 2
+aqef_version: "0.2.0"
 
 paths:
   domain_kb: domain/
@@ -9,7 +12,19 @@ paths:
   specs: specs/
   triage: triage/
   reports: reports/
+  decisions: docs/decisions/        # your project's decisions (D-nnn); see skill aqef-decision-change
   test_architecture: qa/test-architecture.md
+
+# Blocking budget (AQEF framework decision AQEF-002): only facts block a merge.
+# FAIL (blocks, every tier): new product defect, Test Guard violation, data guard violation,
+#   missing red-before-green evidence, criteria coverage below the tier minimum, required metric missing.
+# Everything else is an escalation. Each tier's `on_escalate` decides what an escalation does:
+#   block     -> ESCALATE, exit 2: the merge waits for a human gate
+#   follow_up -> FOLLOW_UP, exit 0: the merge goes ahead, CI opens a follow-up task for the listed gates
+#   comment   -> PASS with advisories, exit 0: a comment only
+gate:
+  required_metrics: [criteria_coverage, red_before_green_all, test_guard_violations, new_product_defects]
+  advisory_metrics: [flake_rate, ui_share]   # reported as an advisory when missing; never block
 
 # Risk tiers. Assign one tier to each capability in domain/capabilities/*.md
 tiers:
@@ -20,7 +35,8 @@ tiers:
     criteria_coverage_min: 1.00
     flake_reruns: 10
     nfr_required: [security, performance, accessibility]
-    human_gates: [H1, H2, H3, H4]
+    human_gates: [H1, H2, H3, H4]    # always; H3 makes every T1 change wait for a human
+    on_escalate: block
   t2:
     description: Core user journeys
     mutation_score_min: 0.70
@@ -29,7 +45,8 @@ tiers:
     flake_reruns: 5
     nfr_required: [security]
     human_gates: [H1, H4]
-    escalate_gates: [H2, H3]        # run only when the panel says ESCALATE
+    escalate_gates: [H3]             # the human gate that an escalation asks for
+    on_escalate: follow_up
   t3:
     description: Internal tools, cosmetic changes
     mutation_score_min: null         # not measured
@@ -38,7 +55,9 @@ tiers:
     flake_reruns: 3
     nfr_required: []
     human_gates: [H1, H4]
-    sample_audit_rate: 0.10          # H2 and H3 on a 10% sample
+    escalate_gates: [H3]
+    on_escalate: comment
+    sample_audit_rate: 0.10          # H3 follow-up on a 10% sample, chosen by a hash of the feature ID
 
 suite_rules:
   red_before_green_required: true
@@ -46,6 +65,27 @@ suite_rules:
   gating_flake_rate_max: 0.01
   pr_feedback_minutes_max: 15
   quarantine_max_sprints: 2
+
+# Test Guard: blocks diffs that delete, skip or weaken tests.
+test_guard:
+  include:                           # a changed file is a test file when its path or name matches
+    - "test_*.py"
+    - "*_test.py"
+    - "*.test.*"
+    - "*.spec.*"
+    - "*Test.java"
+    - "*Tests.java"
+    - "*Test.kt"
+    - "*Test.cs"
+    - "*Tests.cs"
+    - "*_test.go"
+    - "*.feature"
+    - "tests/*"
+    - "test/*"
+    - "*/tests/*"
+    - "*/test/*"
+    - "*/__tests__/*"
+  waivers: .aqef/test-guard-waivers.yaml   # protect this file with CODEOWNERS
 
 review_panel:
   provider: aqef                     # aqef | qestack | custom

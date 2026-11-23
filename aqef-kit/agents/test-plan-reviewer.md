@@ -2,6 +2,8 @@
 name: test-plan-reviewer
 description: Read-only panel that reviews the test plan, feature files and data plan before implementation. Use at the end of phase 2.
 tools: Read, Grep, Glob, Write
+kind: report
+writes: ["specs/*/test-plan.md"]
 ---
 
 # Test Plan Reviewer (panel)

@@ -1,0 +1,43 @@
+# Changelog
+
+All notable changes to AQEF. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [semantic versioning](https://semver.org/) as described in [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## [0.2.0] - Unreleased
+
+Theme: a fast, safe gate. QE blocks only on facts, never passes on missing data, and stops agents from weakening tests.
+
+### Added
+- **Blocking budget.** Only facts block a merge. Each tier's `on_escalate` routes other findings: `block` (T1), `follow_up` (T2) or `comment` (T3).
+- Gatekeeper decision `FOLLOW_UP` (exit 0): merge, and open a follow-up task for the listed gate. Exit code 3 (`ERROR`) for bad input. `--json` output.
+- Gatekeeper uses `escalate_gates` and `sample_audit_rate` (stable hash-based T3 audit sample).
+- New blocking metrics: `data_guard_violations`. New escalation metric: `test_guard_waived`.
+- **Test Guard bot** (`bots/testguard.py`): fails on deleted test files, removed tests, removed assertions, added skips and added retries. Covers 15 test frameworks. Waivers need a reason and an approver.
+- `schemas/config.schema.json` and `schemas/metrics.schema.json`. Each config key records who enforces it (`x-aqef-enforced-by`).
+- Example records in `schemas/examples/`, validated in CI.
+- Agent permission contract in front matter: `kind`, `writes`, `commands`. `check_kit.py` checks it.
+- `check_kit.py --root`, and tests that break a copy of the kit to prove each check works.
+- **Decision registry** (`docs/decisions/`): one home per decision (`AQEF-001` session-first, `AQEF-002` blocking budget). Other files cite the ID. `check_kit.py` fails when a file states a decision without citing it, cites an unknown or superseded decision, or brings back retired wording.
+- `aqef-decision-change` skill and `templates/decision.md`, so adopting teams can keep their own decisions (`D-nnn`) consistent the same way. `paths.decisions` in the config.
+- `AGENTS.md` (and `CLAUDE.md`, which imports it) with instructions for coding agents working in this repo.
+- `CHANGELOG.md`, `CONTRIBUTING.md`, `pytest.ini`, `aqef-kit/bots/requirements.txt`. README status table.
+
+### Changed
+- **Breaking:** config key `version: 1` is now `config_version: 2`, plus `aqef_version`. New required sections `gate` and per-tier `on_escalate`.
+- **Breaking:** the gatekeeper fails when a metric in `gate.required_metrics` is missing. Before, it treated a missing `new_product_defects`, `test_guard_violations`, `flake_rate` or `ui_share` as 0 and could PASS.
+- **Breaking:** metrics files need `schema_version: 1` and `feature`.
+- **Breaking:** test results no longer use `level: nfr`. NFR tests keep their real level and set `nfr`. A result needs `requirements` or `nfr`.
+- T2 escalations no longer block the merge. H3 runs as a follow-up after merge. T3 escalations are comments.
+- `test-review-panel`, `report-analyst`, `coverage-traceability-analyst` and `fault-seeder` no longer have the Bash tool. None of their steps needed it.
+- Thresholds are labelled provisional in the config and the docs.
+- The docs state that AQEF needs no AI API keys or tokens. Agents run in the team's coding agent session. CI runs only deterministic bots. Triage and reporting after CI are run by a person in their coding agent, on the CI artifacts.
+- One term for the lifecycle: "phase" (was a mix of "stage" and "phase").
+
+### Upgrade from 0.1
+1. In `.aqef/config.yaml`: replace `version: 1` with `config_version: 2` and `aqef_version: "0.2.0"`. Add the `gate` and `test_guard` sections and `on_escalate` per tier (copy from the kit).
+2. Make your CI bots write `schema_version: 1`, `feature` and every metric in `gate.required_metrics`.
+3. Run `python bots/gatekeeper.py --metrics <file>`. Exit 3 lists every schema problem.
+
+## [0.1.0] - 2026-11-22
+
+### Added
+- AQEF framework doc, 15 diagrams, starter kit (agents, skills, config, templates, gate checklists, tag taxonomy, KB example, schemas), sample gatekeeper, kit consistency check and CI.

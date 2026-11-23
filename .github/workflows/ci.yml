@@ -16,6 +16,8 @@ jobs:
         python: ["3.10", "3.13"]
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
@@ -27,3 +29,6 @@ jobs:
       - name: Gatekeeper on example metrics
         working-directory: aqef-kit
         run: python bots/gatekeeper.py --config .aqef/config.yaml --metrics bots/example-metrics.json
+      - name: Test Guard on this pull request
+        if: github.event_name == 'pull_request'
+        run: python aqef-kit/bots/testguard.py --base "origin/${{ github.base_ref }}" --config aqef-kit/.aqef/config.yaml
