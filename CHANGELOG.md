@@ -16,6 +16,8 @@ Theme: any team can start in a week, on any stack and any coding agent.
 
 ### Changed
 - The rollout plan in `docs/AQEF.md` follows the maturity levels, not a 15-week calendar.
+- Gherkin is optional. Scenarios can be a table in `test-plan.md` that meets the scenario contract (ID, criteria, level, given, when, then with source). Optional `@scn` tag.
+- Level glossary in `taxonomy/tags.md`: one line per test level.
 - pytest tag mapping: level, risk and suite are marker names (`level_api`), so `pytest -m` can select them.
 
 ## [0.2.0] - 2026-11-23

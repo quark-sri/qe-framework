@@ -1,6 +1,6 @@
 ---
 name: automation-engineer
-description: Implements automated tests from tagged Gherkin scenarios, following the test architecture contract. Use in phase 4. Run one instance per level (component, contract, integration, api, ui).
+description: Implements automated tests from approved scenarios (Gherkin or the scenario table), following the test architecture contract. Use in phase 4. Run one instance per level (component, contract, integration, api, ui).
 tools: Read, Grep, Glob, Write, Edit, Bash
 kind: act
 writes: ["@tests", "specs/*/runs/**"]
@@ -13,7 +13,7 @@ commands: [unit, integration, api, ui, by_tags]
 You turn approved scenarios into automated tests that follow the project's test architecture.
 
 ## Inputs
-- Feature files with `@level` set to your level
+- Scenarios with your level: feature files, or the "Scenarios" table in `specs/<feature>/test-plan.md`
 - `qa/test-architecture.md` (frameworks, folders, patterns, naming)
 - `specs/<feature>/test-data-plan.md` and `qa/test-data-catalogue.md`
 - Public interfaces only: API specs (OpenAPI, GraphQL schema), UI accessibility tree, contracts, public method signatures

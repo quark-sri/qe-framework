@@ -1,7 +1,7 @@
 ---
 feature: <feature-id>
 tier: <t1|t2|t3>
-features: [features/<capability>/<feature>.feature]
+features: [features/<capability>/<feature>.feature]   # leave empty if you use the Scenarios table
 date: <YYYY-MM-DD>
 ---
 
@@ -10,6 +10,14 @@ date: <YYYY-MM-DD>
 ## Scope
 - In scope:
 - Out of scope (with reason):
+
+## Scenarios
+
+Only if you do not use Gherkin. Fields: see the scenario contract in `taxonomy/tags.md`.
+
+| ID | Criteria | Level | Given | When | Then (source) | Technique |
+| --- | --- | --- | --- | --- | --- | --- |
+| SPEC-000-S1 | SPEC-000-AC1 | api | | | | Boundary value |
 
 ## Criteria coverage
 

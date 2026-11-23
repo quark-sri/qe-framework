@@ -9,7 +9,7 @@ Gherkin tags flow into test code as annotations (JUnit `@Tag`, pytest markers, P
 | --- | --- | --- | --- |
 | Capability | `@cap:<domain>.<capability>` | `@cap:payments.refund` | Must exist in `domain/capabilities/` |
 | Requirement | `@req:<spec-id>-AC<n>` | `@req:SPEC-142-AC3` | One or more. Must exist in the spec. NFR tests may use `@nfr` instead |
-| Level | `@level:<level>` | `@level:api` | One of: unit, component, contract, integration, api, ui |
+| Level | `@level:<level>` | `@level:api` | One of: unit, component, contract, integration, api, ui. See [Levels](#levels) |
 | Risk | `@risk:<tier>` | `@risk:t1` | Inherits the capability tier unless raised |
 
 ## Optional tags
@@ -17,11 +17,44 @@ Gherkin tags flow into test code as annotations (JUnit `@Tag`, pytest markers, P
 | Tag | Format | Example | Use |
 | --- | --- | --- | --- |
 | Suite | `@suite:<name>` | `@suite:smoke` | smoke, regression, nightly, release |
+| Scenario | `@scn:<feature>-S<n>` | `@scn:SPEC-142-S2` | The scenario that the test automates. Use it when one criterion has several scenarios |
 | Defect | `@defect:<id>` | `@defect:BUG-881` | Test proves a defect fix. Used by the delta report |
 | NFR | `@nfr:<type>` | `@nfr:a11y` | security, perf, a11y, privacy, reliability. The test keeps its real `@level` |
 | Quarantine | `@quarantine:<ticket>` | `@quarantine:FLAKY-12` | Test runs in a non-gating job only |
 | Owner | `@owner:<team>` | `@owner:checkout` | Routes triage |
 | Manual | `@manual` | `@manual` | Scenario that cannot be automated. Needs a reason in the plan |
+
+## Levels
+
+Use the lowest level that can prove the scenario.
+
+| Level | What it tests | Real dependencies |
+| --- | --- | --- |
+| `unit` | One function or class | None. All dependencies are replaced |
+| `component` | One service or one UI component, alone | None outside the component |
+| `contract` | The request and response format between two services | None. Each side tests against the contract |
+| `integration` | Your code with one real dependency: database, queue or file system | One |
+| `api` | A business flow through the public API of the running service | All, in a test environment |
+| `ui` | A critical user journey through the real UI | All. Keep UI tests to the critical journeys |
+
+NFR is not a level. An NFR test keeps its real level and adds `@nfr:<type>`.
+
+## Scenario contract
+
+Gherkin is optional. A scenario needs only these fields:
+
+| Field | Example |
+| --- | --- |
+| ID | `SPEC-142-S2` |
+| Criteria it proves | `SPEC-142-AC2` |
+| Level | `api` |
+| Given (precondition) | An order delivered 31 days ago, requested by the customer |
+| When (action) | The customer asks for a refund |
+| Then (expected result, with its source) | The refund is rejected (rule `REF-001`) |
+
+Write scenarios in one of two forms:
+- **Gherkin:** `features/<capability>/<feature>.feature`, from `templates/feature.template.feature`.
+- **Table:** the "Scenarios" section of `specs/<feature>/test-plan.md`.
 
 ## Rules
 

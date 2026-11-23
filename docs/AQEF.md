@@ -120,7 +120,7 @@ Each phase lists its quality activities, the agents, the outputs and the exit ga
 
 ### Phase 2: Plan — design the tests
 
-1. The **Scenario Designer** agent writes Gherkin scenarios for every acceptance criterion. It uses test design techniques: equivalence partitions, boundary values, decision tables (as `Scenario Outline` examples), state transitions, and negative and error paths. It does not read code.
+1. The **Scenario Designer** agent writes scenarios for every acceptance criterion, in Gherkin or in a scenario table (Gherkin is optional; see the scenario contract in the [tag taxonomy](../aqef-kit/taxonomy/tags.md#scenario-contract)). It uses test design techniques: equivalence partitions, boundary values, decision tables (as `Scenario Outline` examples), state transitions, and negative and error paths. It does not read code.
 2. The **Test Strategist** agent assigns a recommended level to each scenario (unit, component, contract, integration, API, UI end-to-end) and an owner (dev agent for unit, QE agent for the rest). It checks the pyramid shape and the run cost. It also tags NFR needs.
 3. The **Test Data Designer** agent defines the data for each scenario from KB entities and rules: valid sets, boundary sets, invalid sets, and data builders to create.
 4. The **Test Plan Reviewer** panel checks the plan: coverage of each criterion, missing negative cases, wrong expected results against the KB, wrong level, duplicates.
@@ -138,7 +138,7 @@ Each phase lists its quality activities, the agents, the outputs and the exit ga
 ### Phase 4: Implement — write and prove the tests
 
 1. **Dev coding agents** write unit tests with the code (TDD). Unit tests must map to scenarios tagged `@level:unit`.
-2. The **Automation Engineer** agents write integration, API and UI tests from the Gherkin. They follow `qa/test-architecture.md`. They must not change production code or weaken a test.
+2. The **Automation Engineer** agents write integration, API and UI tests from the scenarios. They follow `qa/test-architecture.md`. They must not change production code or weaken a test.
 3. **Red-before-green:** each new test must fail on the old code or on a seeded fault, then pass on the new code. A test that never fails proves nothing.
 4. The **Execution Bot** runs the new tests in the dev container.
 5. The **Coverage and Traceability Analyst** compares the plan with the real tests and with code coverage. It lists gaps. The Automation Engineer adds the missing tests. This loop repeats until no gap is left or a human accepts the gap.

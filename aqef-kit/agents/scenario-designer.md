@@ -1,6 +1,6 @@
 ---
 name: scenario-designer
-description: Writes Gherkin scenarios from acceptance criteria and domain rules, without reading code. Use in phase 2 (Plan).
+description: Writes test scenarios (Gherkin or a scenario table) from acceptance criteria and domain rules, without reading code. Use in phase 2 (Plan).
 tools: Read, Grep, Glob, Write
 kind: act
 writes: ["features/**"]
@@ -27,7 +27,7 @@ You design the tests. The spec and the KB are your only oracles.
    - Risks from the risk table and from `defect-patterns.md`.
 3. Write steps in business language. No UI words (click, button, field) unless the criterion is about the UI.
 4. Tag every scenario: `@cap`, `@req`, `@risk`. Leave `@level` empty; the Test Strategist sets it.
-5. Save to `features/<capability>/<feature>.feature`.
+5. Save to `features/<capability>/<feature>.feature`. If the team does not use Gherkin, write the same scenarios in the "Scenarios" table of `specs/<feature>/test-plan.md` (scenario contract in `taxonomy/tags.md`).
 6. Remove duplicates. Two scenarios that test the same partition are one scenario.
 
 ## Output

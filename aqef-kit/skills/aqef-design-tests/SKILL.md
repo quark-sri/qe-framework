@@ -1,12 +1,12 @@
 ---
 name: aqef-design-tests
-description: AQEF phases 2 and 3. Designs Gherkin scenarios, assigns test levels and owners, designs synthetic test data, reviews the plan and adds test tasks to the task list. Use after gate H1 is approved.
+description: AQEF phases 2 and 3. Designs test scenarios (Gherkin optional), assigns test levels and owners, designs synthetic test data, reviews the plan and adds test tasks to the task list. Use after gate H1 is approved.
 ---
 
 # AQEF phases 2–3: Design tests
 
 ## Steps
-1. Run `scenario-designer`. Output: `features/<capability>/<feature>.feature`.
+1. Run `scenario-designer`. Output: `features/<capability>/<feature>.feature`, or the "Scenarios" table in `test-plan.md`.
 2. Run `test-strategist`. Output: `@level` tags and the level matrix in `specs/<feature>/test-plan.md`.
 3. Run `nfr-test-designer` for scenarios tagged `@nfr`.
 4. Run `test-data-designer`. Output: `specs/<feature>/test-data-plan.md`.
