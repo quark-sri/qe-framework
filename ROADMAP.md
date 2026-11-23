@@ -18,11 +18,7 @@ The Quality Gatekeeper and the Test Guard have sample implementations. The other
 - [ ] `AGENTS.md` entry point for coding agents other than Claude Code.
 - [x] Gatekeeper: T3 sample audit selection (`sample_audit_rate`) (v0.2).
 - [ ] Gatekeeper: per-state triage autonomy checks.
-- [ ] **Waiver approval by code owners (v0.3).** Today the Test Guard accepts any non-empty `approved_by`, so an agent could write a waiver that passes. Fix:
-  - CODEOWNERS entry for `.aqef/` (the waivers file and the config).
-  - An agent may propose a waiver with `approved_by: pending`. A pending waiver counts as an open violation.
-  - CI accepts a waiver only when a code owner approved the pull request, or authored the commit that changed the waivers file (for solo maintainers, who cannot approve their own pull request).
-  - The approval is the normal review click. No separate file edit. Response target and backup reviewer per AQEF-004.
+- [x] **Waiver approval by code owners (v0.3).** CODEOWNERS owns `.aqef/` and `docs/decisions/`. With the code host's "Require review from Code Owners" setting, an agent can propose a waiver but only an owner can approve it. No extra bot code.
 - [ ] Packaging as a Claude Code plugin, like qestack.
 - [ ] Release workflow that builds `aqef-kit.zip` from the folder.
 

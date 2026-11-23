@@ -69,7 +69,9 @@ A planned removal needs a waiver in `.aqef/test-guard-waivers.yaml`:
   approved_by: jane.doe
 ```
 
-Waived violations do not fail the build. They go to the gatekeeper as `test_guard_waived`, and a human confirms them. Protect the waivers file with CODEOWNERS, so an agent cannot approve its own waiver.
+Waived violations do not fail the build. They go to the gatekeeper as `test_guard_waived`, and a human confirms them.
+
+The Test Guard checks only that `approved_by` is filled in. Who approved is checked by your code host: copy `templates/CODEOWNERS.example` and turn on "Require review from Code Owners". Then every change to the waivers file waits for an owner's review, so an agent can propose a waiver but cannot approve it.
 
 Exit codes: 0 clean or all waived, 1 violations, 3 bad input.
 

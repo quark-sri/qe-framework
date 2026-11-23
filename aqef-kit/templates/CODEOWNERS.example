@@ -1,0 +1,8 @@
+# Copy to .github/CODEOWNERS (GitHub), CODEOWNERS or docs/CODEOWNERS.
+# Then turn on branch protection "Require review from Code Owners" for the main branch.
+# Result: every change to a Test Guard waiver or a decision waits for an owner's review,
+# so an agent can propose a waiver but cannot approve it.
+# Use real logins or teams, for example @your-org/qe-leads.
+
+/.aqef/            @qe-lead-login
+/docs/decisions/   @qe-lead-login @tech-lead-login
