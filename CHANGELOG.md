@@ -2,7 +2,15 @@
 
 All notable changes to AQEF. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [semantic versioning](https://semver.org/) as described in [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-## [0.2.0] - Unreleased
+## [0.3.0] - Unreleased
+
+Theme: any team can start in a week, on any stack and any coding agent.
+
+### Added
+
+### Changed
+
+## [0.2.0] - 2026-11-23
 
 Theme: a fast, safe gate. QE blocks only on facts, never passes on missing data, and stops agents from weakening tests.
 
