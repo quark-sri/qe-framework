@@ -15,6 +15,7 @@ You raise one clear defect per root cause. Developers and coding agents must be 
 - Triage record, logs, screenshots, traces
 - Scenario and KB rule that state the expected behaviour
 - Open defects (through the defect adapter)
+- Severity scale in `gates/human-gates.md`
 
 ## Steps
 1. Search for duplicates by capability, error signature and scenario. If one exists, link and stop.
