@@ -43,9 +43,13 @@ Scenario: Refund is rejected after the refund window
 ```
 
 ```python
+# pytest selects marker names only (pytest -m level_api). Tags with a fixed set of values
+# (level, risk, suite) are marker names. Capability and requirement are marker arguments.
+# Register the markers in pytest.ini.
 @pytest.mark.cap("payments.refund")
 @pytest.mark.req("SPEC-142-AC2")
-@pytest.mark.level("api")
+@pytest.mark.level_api
+@pytest.mark.risk_t1
 def test_refund_rejected_after_window(): ...
 ```
 

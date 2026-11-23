@@ -149,6 +149,20 @@
         "t1_requires_human": {"type": "array", "items": {"type": "string"}, "x-aqef-enforced-by": "agents"}
       }
     },
+    "stages": {
+      "type": "object",
+      "description": "When each test command runs. Each name in runs must be a key in commands.",
+      "x-aqef-enforced-by": "mixed",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["runs"],
+        "additionalProperties": false,
+        "properties": {
+          "gating": {"type": "boolean", "x-aqef-enforced-by": "bot-contract"},
+          "runs": {"type": "array", "items": {"type": "string"}, "minItems": 1, "x-aqef-enforced-by": "bot-contract"}
+        }
+      }
+    },
     "commands": {
       "type": "object",
       "x-aqef-enforced-by": "kit",

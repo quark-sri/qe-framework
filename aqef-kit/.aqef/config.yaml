@@ -152,7 +152,18 @@ triage:
     - regression_of_fixed_defect   # reopening a T1 defect
     - flaky                        # a T1 test never leaves the gating suite alone
 
-# Tool commands. The Execution Bot calls these. Replace with your own.
+# Stages: when each test command runs. Names in `runs` come from `commands` below.
+# gating: true means a failure stops the merge (pr) or the release (release).
+# T1 changes also run the post_merge commands before merge. Time targets live in speed_budget only.
+stages:
+  precheck:   {gating: false, runs: [unit]}                                  # in the agent session, before the PR
+  pr:         {gating: true,  runs: [unit, integration, api, security_sast]}
+  post_merge: {gating: false, runs: [ui, mutation, a11y]}
+  nightly:    {gating: false, runs: [unit, integration, api, ui, mutation, a11y, perf]}
+  release:    {gating: true,  runs: [ui, perf, security_dast]}
+
+# Tool commands. The Execution Bot and the agents call these. Replace them with your own.
+# by_tags runs the tests that carry the tags in {tags}. Examples for other stacks are below.
 commands:
   unit: "mvn -q test"
   integration: "mvn -q verify -Pintegration"
@@ -164,3 +175,21 @@ commands:
   security_sast: "semgrep ci"
   security_dast: "zap-baseline.py -t $BASE_URL"
   by_tags: "npx playwright test --grep \"{tags}\""
+
+# Other stacks: replace the matching lines above.
+#
+# Java, JUnit 5 tags (@Tag("level:api")):
+#   by_tags: "mvn -q test -Dgroups=\"{tags}\""
+#
+# Python, pytest. pytest selects marker names only, so tags that select tests are
+# markers such as level_api and risk_t1 (see taxonomy/tags.md):
+#   unit: "pytest -q -m level_unit"
+#   integration: "pytest -q -m level_integration"
+#   api: "pytest -q -m level_api"
+#   mutation: "mutmut run"
+#   by_tags: "pytest -q -m \"{tags}\""
+#
+# Node, Vitest or Jest for unit tests, Playwright for api and ui:
+#   unit: "npx vitest run"            # or "npx jest"
+#   mutation: "npx stryker run"
+#   by_tags: "npx playwright test --grep \"{tags}\""

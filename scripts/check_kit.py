@@ -7,7 +7,7 @@ Checks:
    and `commands` when it has Bash. Report agents have no Edit or Bash and write only reports.
 3. Each agent in `.aqef/config.yaml` autonomy has a definition file, and the reverse.
 4. The config matches `schemas/config.schema.json`, and every key in that schema says
-   who enforces it (`x-aqef-enforced-by`).
+   who enforces it (`x-aqef-enforced-by`). Each stage runs only commands defined in the config.
 5. Each KB file has an `id`; every `relates_to` id exists.
 6. Every relative markdown link in the kit and docs resolves to a file.
 7. The JSON schemas are valid Draft 2020-12 schemas. Example records in `schemas/examples/`
@@ -112,6 +112,11 @@ def check_config(errors, kit, config, agent_names):
         errors.append(f"config autonomy lists '{name}' but agents/{name}.md does not exist")
     for name in sorted(agent_names - configured):
         errors.append(f"agents/{name}.md has no autonomy level in .aqef/config.yaml")
+    commands = set(config.get("commands") or {})
+    for stage, spec in (config.get("stages") or {}).items():
+        for cmd in (spec or {}).get("runs") or []:
+            if cmd not in commands:
+                errors.append(f"config: stage '{stage}' runs '{cmd}', which is not in commands")
     triage = config.get("triage") or {}
     states = set(triage.get("confidence_bars") or {}) | {"expected_change", "regression_of_fixed_defect"}
     for state in (triage.get("never_autonomous") or []) + (triage.get("t1_requires_human") or []):
