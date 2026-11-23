@@ -7,9 +7,11 @@ All notable changes to AQEF. The format follows [Keep a Changelog](https://keepa
 Theme: any team can start in a week, on any stack and any coding agent.
 
 ### Added
+- **AQEF Core** (`docs/core.md`): the minimum rules and parts, 4 maturity levels with exit criteria, and the week-1 steps to Level 1.
 - CODEOWNERS for `.aqef/` and `docs/decisions/`, and `templates/CODEOWNERS.example` for adopters. With "Require review from Code Owners", only an owner can approve a Test Guard waiver or a decision change.
 
 ### Changed
+- The rollout plan in `docs/AQEF.md` follows the maturity levels, not a 15-week calendar.
 
 ## [0.2.0] - 2026-11-23
 

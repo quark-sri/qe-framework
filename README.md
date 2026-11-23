@@ -34,6 +34,7 @@ AQEF is tool-agnostic. It plugs into any spec-driven AI SDLC (GitHub Spec Kit, A
 
 | Path | Contents |
 | --- | --- |
+| [`docs/core.md`](docs/core.md) | **Start here.** AQEF Core: the minimum, maturity levels, week 1 |
 | [`docs/AQEF.md`](docs/AQEF.md) | The framework: principles, phases, agents, trust model, triage, reporting, adoption |
 | [`docs/decisions/`](docs/decisions/) | Framework decisions (`AQEF-nnn`): one home per rule; other files cite the ID |
 | [`docs/diagrams/`](docs/diagrams/) | 15 diagrams (SVG and PNG): overview, each phase, roles, pyramid, KB, traceability, trust |

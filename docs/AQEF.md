@@ -20,6 +20,8 @@ AQEF is tool-agnostic. It plugs into any AI SDLC that has phases like specify, p
 
 AQEF runs from the team's own coding-agent sessions and needs no AI API keys or tokens. It is for teams that work with coding agents such as Claude Code, Codex, Cursor or Copilot on their normal plans. See [Where agents and bots run](#where-agents-and-bots-run) and decision [AQEF-001](decisions/AQEF-001-session-first.md).
 
+**Start with [AQEF Core](core.md).** It is one page: the minimum a team must do and the steps to reach Level 1 in one week. The rest of this doc is the reference.
+
 ## Core principles
 
 Twelve principles control every decision in AQEF. When a process step is not clear, use these principles to decide.
@@ -395,11 +397,7 @@ All targets are starting points. Set your own baseline in the first month, then 
 
 ### Rollout plan
 
-1. **Weeks 1–2: Foundation.** Write the test architecture contract, the tag taxonomy and the KB index. Pick one pilot capability.
-2. **Weeks 3–6: Plan-phase agents.** Run Spec Critic, Scenario Designer and Test Strategist on the pilot. All agents at L1. Measure how many human edits each output needs.
-3. **Weeks 7–10: Implement-phase agents.** Add the Automation Engineer, review panel, Test Guard and red-before-green proof. Add mutation for T1.
-4. **Weeks 11–14: Run and triage.** Normalize results, start the triage agent at L1, build the delta and capability reports.
-5. **Week 15 onward: Scale.** Add capabilities. Promote agents that meet the trust thresholds. Review metrics each sprint.
+Roll out by maturity level, not by calendar. Level 1 takes one week. Each later level takes one sprint or more. The levels, their exit criteria and the week-1 steps are in [AQEF Core](core.md#maturity-levels).
 
 ### Starter kit
 
