@@ -52,3 +52,5 @@ Each level adds proof. Move up one level when you meet the exit criteria of your
 - [ ] Every new test has red-before-green evidence.
 - [ ] One feature went through H1 and H4 with a written decision.
 - [ ] The person or agent that wrote a test did not approve it.
+
+If you have no formal specs, an existing codebase or a very small team, read [Adopting AQEF](adopting.md).
