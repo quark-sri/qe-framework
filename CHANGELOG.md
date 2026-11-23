@@ -9,6 +9,7 @@ Theme: any team can start in a week, on any stack and any coding agent.
 ### Added
 - **AQEF Core** (`docs/core.md`): the minimum rules and parts, 4 maturity levels with exit criteria, and the week-1 steps to Level 1.
 - **Adopting AQEF** (`docs/adopting.md`): small teams (role pairs, no self-approval), existing codebases (characterization tests, tag as you touch, ratchet from baseline) and teams without formal specs (criteria from tickets, approved at H1).
+- Kit `AGENTS.md`: one entry point for any coding agent (rules, skill per phase, where things are). Kit `CLAUDE.md` imports it for Claude Code.
 - CODEOWNERS for `.aqef/` and `docs/decisions/`, and `templates/CODEOWNERS.example` for adopters. With "Require review from Code Owners", only an owner can approve a Test Guard waiver or a decision change.
 
 ### Changed

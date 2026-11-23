@@ -28,7 +28,7 @@ AQEF is tool-agnostic. It plugs into any spec-driven AI SDLC (GitHub Spec Kit, A
 | Results Normalizer, Traceability Bot, Report Builder, Data Guard | Contracts only (see [`ROADMAP.md`](ROADMAP.md)) |
 | Thresholds (mutation, seeded faults, confidence bars) | **Provisional.** Not calibrated on pilot data yet |
 | AI-product testing (evals, model and prompt regression, AI safety) | Planned for milestone v0.5, narrow first version ([AQEF-003](docs/decisions/AQEF-003-ai-product-track.md)) |
-| Coding agents | Claude Code format. Other agents can read the markdown; an `AGENTS.md` entry point is planned |
+| Coding agents | `AGENTS.md` entry point for any agent; agents and skills in Claude Code format |
 
 ## Repository layout
 
@@ -59,7 +59,14 @@ cp -R .aqef domain qa taxonomy templates gates schemas bots "$TARGET"/
 mkdir -p "$TARGET"/.claude/agents "$TARGET"/.claude/skills
 find agents -name '*.md' ! -name README.md -exec cp {} "$TARGET"/.claude/agents/ \;
 cp -R skills/* "$TARGET"/.claude/skills/
+
+# 3. Agent instructions: add the AQEF section to AGENTS.md (Codex, Cursor, Copilot and others read it)
+cat AGENTS.md >> "$TARGET"/AGENTS.md
+# Claude Code reads CLAUDE.md: make it import AGENTS.md
+grep -qx '@AGENTS.md' "$TARGET"/CLAUDE.md 2>/dev/null || echo '@AGENTS.md' >> "$TARGET"/CLAUDE.md
 ```
+
+Other coding agents: also copy `agents/` and `skills/` into the root of your project. `AGENTS.md` tells the agent where to find them.
 
 Then edit `.aqef/config.yaml`, fill `qa/test-architecture.md` for your stack, and replace the refund example in `domain/` with your own top 5 capabilities.
 See [`aqef-kit/README.md`](aqef-kit/README.md) for the phase mapping to Spec Kit, Kiro and BMAD.
