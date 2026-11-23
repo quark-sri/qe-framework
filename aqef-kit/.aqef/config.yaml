@@ -62,7 +62,7 @@ tiers:
 suite_rules:
   red_before_green_required: true
   ui_share_max: 0.10                 # share of tests at UI level
-  gating_flake_rate_max: 0.01
+  gating_flake_rate_max: 0.01       # flake rate formula: bots/README.md
   quarantine_max_sprints: 2
 
 # Speed budget (AQEF framework decision AQEF-004). Targets, not gates: missing them never fails a build.

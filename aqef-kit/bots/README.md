@@ -75,6 +75,16 @@ The Test Guard checks only that `approved_by` is filled in. Who approved is chec
 
 Exit codes: 0 clean or all waived, 1 violations, 3 bad input.
 
+## Flake rate
+
+The Flake Bot computes `flake_rate` for the gatekeeper:
+
+```
+flake_rate = flaky tests / tests run
+```
+
+A test is flaky when it both passes and fails on the same commit. Count the tests in the gating stages (`stages` with `gating: true`) over the last 14 days, plus the reruns of the new tests in this PR (`flake_reruns` per tier). The gatekeeper compares the result with `suite_rules.gating_flake_rate_max`.
+
 ## The other bots
 
 The other bots are contracts: build them with your CI and tools.
