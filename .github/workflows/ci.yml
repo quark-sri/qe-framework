@@ -12,6 +12,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false   # one failing Python version must not cancel the other
       matrix:
         python: ["3.10", "3.13"]
     steps:
