@@ -17,7 +17,7 @@ AQEF is tool-agnostic. It plugs into any spec-driven AI SDLC (GitHub Spec Kit, A
 **No AI API keys or tokens are needed.** Agents run inside the coding agent your team already uses, on its normal plan. CI runs only deterministic bots, with no LLM calls ([AQEF-001](docs/decisions/AQEF-001-session-first.md)).
 [qestack](https://github.com/quark-sri/qestack) is one reference implementation of the test review panel and the proof and hardening gates.
 
-## Status (v0.2.0)
+## Status (v0.3.0)
 
 | Part | Status |
 | --- | --- |
@@ -61,9 +61,11 @@ find agents -name '*.md' ! -name README.md -exec cp {} "$TARGET"/.claude/agents/
 cp -R skills/* "$TARGET"/.claude/skills/
 
 # 3. Agent instructions: add the AQEF section to AGENTS.md (Codex, Cursor, Copilot and others read it)
-cat AGENTS.md >> "$TARGET"/AGENTS.md
+# Safe to run again: the section is added only once, and existing content is kept
+touch "$TARGET"/AGENTS.md "$TARGET"/CLAUDE.md
+grep -qxF '# Quality engineering (AQEF)' "$TARGET"/AGENTS.md || { echo; cat AGENTS.md; } >> "$TARGET"/AGENTS.md
 # Claude Code reads CLAUDE.md: make it import AGENTS.md
-grep -qx '@AGENTS.md' "$TARGET"/CLAUDE.md 2>/dev/null || echo '@AGENTS.md' >> "$TARGET"/CLAUDE.md
+grep -qxF '@AGENTS.md' "$TARGET"/CLAUDE.md || printf '\n@AGENTS.md\n' >> "$TARGET"/CLAUDE.md
 ```
 
 Other coding agents: also copy `agents/` and `skills/` into the root of your project. `AGENTS.md` tells the agent where to find them.
