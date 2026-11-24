@@ -127,6 +127,14 @@ def test_waiver_needs_reason_and_approver():
     assert open_ == [] and len(waived) == 1
 
 
+@pytest.mark.parametrize("approver", [None, ""])
+def test_proposed_waiver_with_empty_approver_still_fails(approver):
+    violations = [{"path": "tests/test_old.py", "rule": "deleted_test_file", "detail": ""}]
+    open_, waived = apply_waivers(violations, [{"path": "tests/test_old.py", "rule": "deleted_test_file",
+                                                "reason": "API v1 removed", "approved_by": approver}])
+    assert len(open_) == 1 and waived == []
+
+
 # --- End to end on a real git repo ------------------------------------------------
 
 def git(repo, *args):

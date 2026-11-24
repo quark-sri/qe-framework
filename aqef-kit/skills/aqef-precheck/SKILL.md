@@ -10,7 +10,7 @@ Catch problems in the session, where a fix takes minutes, not in CI. Keep it fas
 ## Steps
 1. Run each command in `stages.precheck.runs` from `.aqef/config.yaml`. Use the command strings from `commands`. Fix failures before you go on.
 2. Run the Test Guard against the base branch: `python bots/testguard.py --base origin/<base-branch>`.
-   - If it reports a violation, restore the test. If the removal is planned, add an entry to `.aqef/test-guard-waivers.yaml` with `approved_by: <owner to approve>` and tell the user. Never fill in an approver yourself.
+   - If it reports a violation, restore the test. If the removal is planned, add an entry to `.aqef/test-guard-waivers.yaml` with `approved_by:` left empty and tell the user. Never fill in an approver yourself. The Test Guard keeps failing until the owner fills it in; report NOT READY.
 3. Check the tags of each new or changed test (`taxonomy/tags.md`):
    - It has `@cap`, `@level`, and `@req` or `@nfr`.
    - The `@cap` exists in `domain/capabilities/`. The `@req` exists in the spec.

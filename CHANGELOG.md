@@ -15,6 +15,9 @@ Theme: any team can start in a week, on any stack and any coding agent.
 - CODEOWNERS for `.aqef/` and `docs/decisions/`, and `templates/CODEOWNERS.example` for adopters. With "Require review from Code Owners", only an owner can approve a Test Guard waiver or a decision change.
 
 ### Changed
+- Version numbers are 0.3.0 in the README and the config.
+- The install step for `AGENTS.md` and `CLAUDE.md` can run again without duplicate content.
+- `aqef-precheck` proposes waivers with an empty approver, so the Test Guard fails until an owner fills it in.
 - The rollout plan in `docs/AQEF.md` follows the maturity levels, not a 15-week calendar.
 - Gherkin is optional. Scenarios can be a table in `test-plan.md` that meets the scenario contract (ID, criteria, level, given, when, then with source). Optional `@scn` tag.
 - `aqef-precheck` skill: the precheck stage, the Test Guard, and tag and red-before-green checks in the agent session before a PR.
