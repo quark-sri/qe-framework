@@ -9,6 +9,7 @@ Read the [framework doc](../docs/AQEF.md) first. This kit is the working part of
 
 | Folder | Contents |
 | --- | --- |
+| `AGENTS.md`, `CLAUDE.md` | Instructions for coding agents in your repo: rules and the skill for each phase |
 | `.aqef/config.yaml` | Risk tiers, gate thresholds, autonomy levels, triage confidence bars |
 | `agents/` | One definition per LLM agent: role, inputs, outputs, must-not rules |
 | `skills/` | One skill per phase. Each skill runs agents and bots in order |
@@ -28,7 +29,8 @@ Read the [framework doc](../docs/AQEF.md) first. This kit is the working part of
 4. Replace the example in `domain/` with your own capabilities. Start with the top 5.
 5. Install the agents and skills for your coding agent:
    - Claude Code: copy `agents/*.md` to `.claude/agents/` and `skills/*` to `.claude/skills/`.
-   - Other agents: reference the files from `AGENTS.md` or the tool's rules folder.
+   - Other agents: copy `agents/` and `skills/` to the root of your repo.
+   - All agents: append `AGENTS.md` to your `AGENTS.md`. For Claude Code, add the line `@AGENTS.md` to `CLAUDE.md` (the kit's `CLAUDE.md` holds only that line).
 6. Map the AQEF phases to your SDLC commands (table below).
 
 ## Phase mapping
@@ -39,6 +41,7 @@ Read the [framework doc](../docs/AQEF.md) first. This kit is the working part of
 | 2 Plan | `/plan` | Design | Architect | `aqef-design-tests` |
 | 3 Tasks | `/tasks` | Tasks | Scrum Master | `aqef-design-tests` (task step) |
 | 4 Implement | `/implement` | Task execution | Dev | `aqef-implement-tests` |
+| 4–5 Before the PR | — | — | Dev | `aqef-precheck` |
 | 5 Converge | `/analyze`, PR | Review | QA | `aqef-converge` |
 | 6–7 Deploy, triage | CI/CD | CI/CD | — | `aqef-triage` |
 | 8 Report | — | — | — | `aqef-report` |

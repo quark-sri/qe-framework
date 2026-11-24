@@ -1,0 +1,4 @@
+# Code owners approve Test Guard waivers and framework decisions.
+# The Test Guard accepts a waiver only when its approver owns the waivers file.
+/.aqef/            @quark-sri
+/docs/decisions/   @quark-sri

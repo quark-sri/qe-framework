@@ -14,6 +14,19 @@ Record each decision in the gate log of the feature (`specs/<feature>/gates.md`)
 | H5 Triage confirmation | 7 Triage | Confidence below the bar, or a never-autonomous state | QE engineer on triage rota |
 | H6 Knowledge base change | Any | Every KB PR | Domain expert |
 
+## Defect severity
+
+Agents and humans use one scale for product defects.
+
+| Severity | Meaning |
+| --- | --- |
+| critical | A T1 capability is broken, data is lost, or security or privacy is breached. No workaround |
+| high | A core journey (T2) is broken, or a T1 capability works only with a workaround |
+| medium | A feature gives a wrong result, and a workaround exists |
+| low | Cosmetic or text problem. The result is correct |
+
+A confirmed new product defect blocks the merge at every severity (AQEF-002). Severity sets the release decision (H4) and the order of work.
+
 ---
 
 ## H1 Requirement review

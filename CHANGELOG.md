@@ -2,7 +2,28 @@
 
 All notable changes to AQEF. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [semantic versioning](https://semver.org/) as described in [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-## [0.2.0] - Unreleased
+## [0.3.0] - Unreleased
+
+Theme: any team can start in a week, on any stack and any coding agent.
+
+### Added
+- **AQEF Core** (`docs/core.md`): the minimum rules and parts, 4 maturity levels with exit criteria, and the week-1 steps to Level 1.
+- **Adopting AQEF** (`docs/adopting.md`): small teams (role pairs, no self-approval), existing codebases (characterization tests, tag as you touch, ratchet from baseline) and teams without formal specs (criteria from tickets, approved at H1).
+- Kit `AGENTS.md`: one entry point for any coding agent (rules, skill per phase, where things are). Kit `CLAUDE.md` imports it for Claude Code.
+- `stages` in the config: which commands run before the PR, on the PR, after merge, nightly and before release. `check_kit.py` checks that each stage runs only defined commands.
+- Commented test commands for Java (JUnit 5 tags), Python (pytest) and Node (Vitest or Jest, Playwright) in the config.
+- CODEOWNERS for `.aqef/` and `docs/decisions/`, and `templates/CODEOWNERS.example` for adopters. With "Require review from Code Owners", only an owner can approve a Test Guard waiver or a decision change.
+
+### Changed
+- The rollout plan in `docs/AQEF.md` follows the maturity levels, not a 15-week calendar.
+- Gherkin is optional. Scenarios can be a table in `test-plan.md` that meets the scenario contract (ID, criteria, level, given, when, then with source). Optional `@scn` tag.
+- `aqef-precheck` skill: the precheck stage, the Test Guard, and tag and red-before-green checks in the agent session before a PR.
+- Defect severity scale (critical, high, medium, low) in `gates/human-gates.md`.
+- Flake rate formula in `bots/README.md`.
+- Level glossary in `taxonomy/tags.md`: one line per test level.
+- pytest tag mapping: level, risk and suite are marker names (`level_api`), so `pytest -m` can select them.
+
+## [0.2.0] - 2026-11-23
 
 Theme: a fast, safe gate. QE blocks only on facts, never passes on missing data, and stops agents from weakening tests.
 

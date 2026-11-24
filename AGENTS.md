@@ -1,6 +1,7 @@
 # Instructions for coding agents in this repository
 
 This repo holds AQEF, a quality engineering framework, and its starter kit (`aqef-kit/`). Read `README.md` for the layout.
+`aqef-kit/AGENTS.md` is the file that adopters copy into their repos. When you change the kit itself, follow this file.
 
 ## Check your work
 

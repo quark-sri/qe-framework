@@ -20,6 +20,8 @@ AQEF is tool-agnostic. It plugs into any AI SDLC that has phases like specify, p
 
 AQEF runs from the team's own coding-agent sessions and needs no AI API keys or tokens. It is for teams that work with coding agents such as Claude Code, Codex, Cursor or Copilot on their normal plans. See [Where agents and bots run](#where-agents-and-bots-run) and decision [AQEF-001](decisions/AQEF-001-session-first.md).
 
+**Start with [AQEF Core](core.md).** It is one page: the minimum a team must do and the steps to reach Level 1 in one week. The rest of this doc is the reference.
+
 ## Core principles
 
 Twelve principles control every decision in AQEF. When a process step is not clear, use these principles to decide.
@@ -118,7 +120,7 @@ Each phase lists its quality activities, the agents, the outputs and the exit ga
 
 ### Phase 2: Plan — design the tests
 
-1. The **Scenario Designer** agent writes Gherkin scenarios for every acceptance criterion. It uses test design techniques: equivalence partitions, boundary values, decision tables (as `Scenario Outline` examples), state transitions, and negative and error paths. It does not read code.
+1. The **Scenario Designer** agent writes scenarios for every acceptance criterion, in Gherkin or in a scenario table (Gherkin is optional; see the scenario contract in the [tag taxonomy](../aqef-kit/taxonomy/tags.md#scenario-contract)). It uses test design techniques: equivalence partitions, boundary values, decision tables (as `Scenario Outline` examples), state transitions, and negative and error paths. It does not read code.
 2. The **Test Strategist** agent assigns a recommended level to each scenario (unit, component, contract, integration, API, UI end-to-end) and an owner (dev agent for unit, QE agent for the rest). It checks the pyramid shape and the run cost. It also tags NFR needs.
 3. The **Test Data Designer** agent defines the data for each scenario from KB entities and rules: valid sets, boundary sets, invalid sets, and data builders to create.
 4. The **Test Plan Reviewer** panel checks the plan: coverage of each criterion, missing negative cases, wrong expected results against the KB, wrong level, duplicates.
@@ -136,7 +138,7 @@ Each phase lists its quality activities, the agents, the outputs and the exit ga
 ### Phase 4: Implement — write and prove the tests
 
 1. **Dev coding agents** write unit tests with the code (TDD). Unit tests must map to scenarios tagged `@level:unit`.
-2. The **Automation Engineer** agents write integration, API and UI tests from the Gherkin. They follow `qa/test-architecture.md`. They must not change production code or weaken a test.
+2. The **Automation Engineer** agents write integration, API and UI tests from the scenarios. They follow `qa/test-architecture.md`. They must not change production code or weaken a test.
 3. **Red-before-green:** each new test must fail on the old code or on a seeded fault, then pass on the new code. A test that never fails proves nothing.
 4. The **Execution Bot** runs the new tests in the dev container.
 5. The **Coverage and Traceability Analyst** compares the plan with the real tests and with code coverage. It lists gaps. The Automation Engineer adds the missing tests. This loop repeats until no gap is left or a human accepts the gap.
@@ -144,6 +146,8 @@ Each phase lists its quality activities, the agents, the outputs and the exit ga
 7. **Hardening:** the Mutation Bot and the Fault Seeder check that the tests catch real faults. The Flake Bot reruns the new tests (for example 10 times) to find non-determinism.
 
 **Output:** test code, `quality-report.md` with an ACCEPT or ESCALATE result. **Exit gate H3 (human, risk-based):** a QE engineer reviews the panel report. T1: always, before merge. T2: on escalation, as a follow-up after merge. T3: on a 10% sample, as a follow-up.
+
+**Before the PR:** the `aqef-precheck` skill runs the precheck stage, the Test Guard and the tag and red-before-green checks in the agent session. Most problems are fixed there, before CI runs.
 
 ### Phase 5: Converge — prove the whole change
 
@@ -395,11 +399,7 @@ All targets are starting points. Set your own baseline in the first month, then 
 
 ### Rollout plan
 
-1. **Weeks 1–2: Foundation.** Write the test architecture contract, the tag taxonomy and the KB index. Pick one pilot capability.
-2. **Weeks 3–6: Plan-phase agents.** Run Spec Critic, Scenario Designer and Test Strategist on the pilot. All agents at L1. Measure how many human edits each output needs.
-3. **Weeks 7–10: Implement-phase agents.** Add the Automation Engineer, review panel, Test Guard and red-before-green proof. Add mutation for T1.
-4. **Weeks 11–14: Run and triage.** Normalize results, start the triage agent at L1, build the delta and capability reports.
-5. **Week 15 onward: Scale.** Add capabilities. Promote agents that meet the trust thresholds. Review metrics each sprint.
+Roll out by maturity level, not by calendar. Level 1 takes one week. Each later level takes one sprint or more. The levels, their exit criteria and the week-1 steps are in [AQEF Core](core.md#maturity-levels).
 
 ### Starter kit
 

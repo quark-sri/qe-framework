@@ -69,9 +69,21 @@ A planned removal needs a waiver in `.aqef/test-guard-waivers.yaml`:
   approved_by: jane.doe
 ```
 
-Waived violations do not fail the build. They go to the gatekeeper as `test_guard_waived`, and a human confirms them. Protect the waivers file with CODEOWNERS, so an agent cannot approve its own waiver.
+Waived violations do not fail the build. They go to the gatekeeper as `test_guard_waived`, and a human confirms them.
+
+The Test Guard checks only that `approved_by` is filled in. Who approved is checked by your code host: copy `templates/CODEOWNERS.example` and turn on "Require review from Code Owners". Then every change to the waivers file waits for an owner's review, so an agent can propose a waiver but cannot approve it.
 
 Exit codes: 0 clean or all waived, 1 violations, 3 bad input.
+
+## Flake rate
+
+The Flake Bot computes `flake_rate` for the gatekeeper:
+
+```
+flake_rate = flaky tests / tests run
+```
+
+A test is flaky when it both passes and fails on the same commit. Count the tests in the gating stages (`stages` with `gating: true`) over the last 14 days, plus the reruns of the new tests in this PR (`flake_reruns` per tier). The gatekeeper compares the result with `suite_rules.gating_flake_rate_max`.
 
 ## The other bots
 
