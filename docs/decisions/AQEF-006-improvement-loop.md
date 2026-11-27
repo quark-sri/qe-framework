@@ -1,7 +1,7 @@
 ---
 id: AQEF-006
 title: "Improvement loop: one change per escaped defect, gates reviewed on evidence"
-status: proposed
+status: accepted
 scope: phase
 date: 2026-11-27
 supersedes: []
@@ -43,4 +43,4 @@ retired_wording: []
 
 ## History
 
-- 2026-11-27: Proposed (v0.4 plan). Waiting for the owner's decision.
+- 2026-11-27: Proposed (v0.4 plan). Accepted by the owner the same day.

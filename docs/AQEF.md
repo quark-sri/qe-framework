@@ -188,7 +188,7 @@ The triage agent gives each failure a state and an action. High-confidence actio
 
 1. The **Report Analyst** agent builds the layer report and the capability report, and it writes a short narrative of new failures, fixes and risks.
 2. **Exit gate H4 (human, always):** the release owner approves the release from the report.
-3. Each sprint, the `aqef-improve` skill turns each escaped defect into one recorded change (a test, a KB rule, a defect pattern, an agent instruction, a threshold or a gate check). It also reviews how well each gate works and fills the scorecard ([AQEF-006](decisions/AQEF-006-improvement-loop.md), proposed). The **Domain Curator** writes the KB changes.
+3. Each sprint, the `aqef-improve` skill turns each escaped defect into one recorded change (a test, a KB rule, a defect pattern, an agent instruction, a threshold or a gate check). It also reviews how well each gate works and fills the scorecard ([AQEF-006](decisions/AQEF-006-improvement-loop.md)). The **Domain Curator** writes the KB changes.
 
 ## Agent and bot catalogue
 

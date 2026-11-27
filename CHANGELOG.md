@@ -12,7 +12,7 @@ Theme: the improvement loops, proven on a worked example.
 - **`aqef-improve` skill**: each sprint, one escape record and one change per escaped defect, a gate effectiveness review and the scorecard.
 - `templates/escape-record.md` and `templates/scorecard.md` (7 metrics with formulas and sources, the same as the opt-in adopter scorecard).
 
-- Decision AQEF-006 (proposed): improvement loop. One change per escaped defect; gates reviewed on evidence; blocking facts and T1 H3 are never relaxed by the review.
+- Decision AQEF-006: improvement loop. One change per escaped defect; gates reviewed on evidence; blocking facts and T1 H3 are never relaxed by the review.
 
 ### Changed
 - The gate log has fixed columns (`templates/gate-log.md`), including the wait time and whether the gate found a real problem, so the scorecard can count them.
