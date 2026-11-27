@@ -46,6 +46,7 @@ Read the [framework doc](../docs/AQEF.md) first. This kit is the working part of
 | 6–7 Deploy, triage | CI/CD | CI/CD | — | `aqef-triage` |
 | 8 Report | — | — | — | `aqef-report` |
 | 0, 8 Learn | — | Steering files | — | `aqef-kb-curate` |
+| Each sprint | — | — | Retrospective | `aqef-improve` |
 
 Command names differ by tool version. Check your tool and adjust.
 
@@ -60,6 +61,8 @@ specs/<feature>/
 features/<capability>/<feature>.feature
 triage/<run-id>/<cluster-id>.md
 reports/<run-id>/release-report.md
+reports/escapes/ESC-<nnn>.md
+reports/scorecards/<sprint>.md
 ```
 
 ## Using qestack

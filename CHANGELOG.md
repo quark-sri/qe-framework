@@ -9,6 +9,8 @@ Theme: the improvement loops, proven on a worked example.
 ### Added
 - **Worked example** (`examples/spec-142/`): one T1 feature through every phase with real evidence: red and green runs, mutation, seeded faults, flake reruns, security scan, metrics, quality report and gate log. CI runs it as a regression test for the framework.
 - `check_kit.py` checks the links in `examples/`.
+- **`aqef-improve` skill**: each sprint, one escape record and one change per escaped defect, a gate effectiveness review and the scorecard.
+- `templates/escape-record.md` and `templates/scorecard.md` (7 metrics with formulas and sources, the same as the opt-in adopter scorecard).
 
 ## [0.3.0] - 2026-11-25
 

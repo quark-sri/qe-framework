@@ -15,6 +15,7 @@ This repository uses AQEF for quality engineering. Follow these instructions whe
 | Before you open or update a PR | `aqef-precheck` |
 | Before a PR is merged | `aqef-converge` |
 | A test fails after deploy | `aqef-triage` |
+| End of each sprint | `aqef-improve` |
 
 ## Rules
 
