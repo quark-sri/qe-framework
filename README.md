@@ -39,6 +39,7 @@ AQEF is tool-agnostic. It plugs into any spec-driven AI SDLC (GitHub Spec Kit, A
 | [`docs/AQEF.md`](docs/AQEF.md) | The framework: principles, phases, agents, trust model, triage, reporting, adoption |
 | [`docs/decisions/`](docs/decisions/) | Framework decisions (`AQEF-nnn`): one home per rule; other files cite the ID |
 | [`docs/diagrams/`](docs/diagrams/) | 15 diagrams (SVG and PNG): overview, each phase, roles, pyramid, KB, traceability, trust |
+| [`examples/spec-142/`](examples/spec-142/) | Worked example: one T1 feature through every phase, with real evidence. Runs in CI |
 | [`aqef-kit/`](aqef-kit/) | Starter kit: agents, skills, config, templates, gate checklists, tag taxonomy, KB example, schemas, gatekeeper and Test Guard bots |
 | [`scripts/check_kit.py`](scripts/check_kit.py) | Consistency check for the kit (agent permissions, config schema, KB links, schemas and examples) |
 | [`tests/`](tests/) | Tests for the gatekeeper, the Test Guard and the kit check |

@@ -178,6 +178,30 @@ def test_nfr_missing_or_failed_escalates():
     assert "NFR security: no result, tier t2 requires it" in res["reasons"]
 
 
+@pytest.mark.parametrize("reason", ["No user interface in this change"])
+def test_nfr_marked_not_applicable_is_an_advisory_not_an_escalation(reason):
+    res = decide(CONFIG, metrics(nfr_results={}, nfr_not_applicable={"security": reason}))
+    assert res["decision"] == "PASS"
+    assert f"NFR security: not applicable: {reason}" in res["advisories"]
+
+
+@pytest.mark.parametrize("reason", ["", "   ", None])
+def test_nfr_not_applicable_without_a_reason_still_escalates(reason):
+    res = decide(CONFIG, metrics(nfr_results={}, nfr_not_applicable={"security": reason}))
+    assert "NFR security: no result, tier t2 requires it" in res["reasons"]
+
+
+def test_real_nfr_failure_wins_over_not_applicable():
+    res = decide(CONFIG, metrics(nfr_results={"security": "fail"}, nfr_not_applicable={"security": "No UI"}))
+    assert "NFR security: result is fail" in res["reasons"]
+
+
+def test_not_applicable_does_not_cover_other_nfr_types():
+    res = decide(CONFIG, metrics(**{**T1_GREEN, "nfr_results": {"security": "pass", "performance": "pass"},
+                                    "nfr_not_applicable": {"security": "No UI"}}))
+    assert "NFR accessibility: no result, tier t1 requires it" in res["reasons"]
+
+
 # --- T3 audit sample ------------------------------------------------------------
 
 def test_audit_sample_is_stable_and_respects_the_rate():

@@ -1,0 +1,521 @@
+FFFFFFFFFFFFFFFFFFFF                                                     [100%]
+=================================== FAILURES ===================================
+__________________ test_full_refund_marks_the_order_refunded ___________________
+
+    @pytest.mark.req("SPEC-142-AC1")
+    def test_full_refund_marks_the_order_refunded():  # S1
+>       d = ask(order(), "100.00")
+            ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_refunds.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('100.00'), currency = 'EUR'
+today = datetime.date(2026, 11, 27), role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+____________ test_partial_refund_marks_the_order_partially_refunded ____________
+
+    @pytest.mark.req("SPEC-142-AC1")
+    def test_partial_refund_marks_the_order_partially_refunded():  # S2
+>       d = ask(order(), "40.00")
+            ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_refunds.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('40.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+_______________ test_refunding_the_rest_marks_the_order_refunded _______________
+
+    @pytest.mark.req("SPEC-142-AC1", "SPEC-142-AC3")
+    def test_refunding_the_rest_marks_the_order_refunded():  # S3
+>       d = ask(order(refunded="60.00"), "40.00")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_refunds.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('60.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('40.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+____________ test_customer_refund_inside_the_window_is_accepted[0] _____________
+
+days = 0
+
+    @pytest.mark.req("SPEC-142-AC2")
+    @pytest.mark.parametrize("days", [0, 30])
+    def test_customer_refund_inside_the_window_is_accepted(days):  # S4
+>       assert ask(order(days_ago=days), "10.00").status == "partially_refunded"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_refunds.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 27))
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+____________ test_customer_refund_inside_the_window_is_accepted[30] ____________
+
+days = 30
+
+    @pytest.mark.req("SPEC-142-AC2")
+    @pytest.mark.parametrize("days", [0, 30])
+    def test_customer_refund_inside_the_window_is_accepted(days):  # S4
+>       assert ask(order(days_ago=days), "10.00").status == "partially_refunded"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_refunds.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 10, 28))
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+__________________ test_customer_refund_on_day_31_is_rejected __________________
+
+    @pytest.mark.req("SPEC-142-AC2")
+    def test_customer_refund_on_day_31_is_rejected():  # S5
+>       rejected(order(days_ago=31), "10.00", "Refund window has closed")
+
+tests/test_refunds.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 10, 27))
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+___________ test_support_lead_can_accept_a_late_refund_with_a_reason ___________
+
+    @pytest.mark.req("SPEC-142-AC2")
+    def test_support_lead_can_accept_a_late_refund_with_a_reason():  # S6
+>       d = ask(order(days_ago=31), "10.00", role="support_lead", reason="Courier lost the return label")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_refunds.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 10, 27))
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'support_lead', reason = 'Courier lost the return label'
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+________ test_support_lead_override_without_a_reason_is_rejected[None] _________
+
+reason = None
+
+    @pytest.mark.req("SPEC-142-AC2")
+    @pytest.mark.parametrize("reason", [None, "", "   "])
+    def test_support_lead_override_without_a_reason_is_rejected(reason):  # S7
+>       rejected(order(days_ago=31), "10.00", "Override needs a reason", role="support_lead", reason=reason)
+
+tests/test_refunds.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 10, 27))
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'support_lead', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+__________ test_support_lead_override_without_a_reason_is_rejected[] ___________
+
+reason = ''
+
+    @pytest.mark.req("SPEC-142-AC2")
+    @pytest.mark.parametrize("reason", [None, "", "   "])
+    def test_support_lead_override_without_a_reason_is_rejected(reason):  # S7
+>       rejected(order(days_ago=31), "10.00", "Override needs a reason", role="support_lead", reason=reason)
+
+tests/test_refunds.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 10, 27))
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'support_lead', reason = ''
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+_________ test_support_lead_override_without_a_reason_is_rejected[   ] _________
+
+reason = '   '
+
+    @pytest.mark.req("SPEC-142-AC2")
+    @pytest.mark.parametrize("reason", [None, "", "   "])
+    def test_support_lead_override_without_a_reason_is_rejected(reason):  # S7
+>       rejected(order(days_ago=31), "10.00", "Override needs a reason", role="support_lead", reason=reason)
+
+tests/test_refunds.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 10, 27))
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'support_lead', reason = '   '
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+_________________ test_delivery_date_in_the_future_is_rejected _________________
+
+    @pytest.mark.req("SPEC-142-AC2")
+    def test_delivery_date_in_the_future_is_rejected():  # S8
+>       rejected(order(days_ago=-1), "10.00", "Delivery date is in the future")
+
+tests/test_refunds.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 28))
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+________________ test_zero_or_negative_amount_is_rejected[0.00] ________________
+
+amount = '0.00'
+
+    @pytest.mark.req("SPEC-142-AC3")
+    @pytest.mark.parametrize("amount", ["0.00", "-5.00"])
+    def test_zero_or_negative_amount_is_rejected(amount):  # S9
+>       rejected(order(), amount, "Amount must be greater than zero")
+
+tests/test_refunds.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('0.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+_______________ test_zero_or_negative_amount_is_rejected[-5.00] ________________
+
+amount = '-5.00'
+
+    @pytest.mark.req("SPEC-142-AC3")
+    @pytest.mark.parametrize("amount", ["0.00", "-5.00"])
+    def test_zero_or_negative_amount_is_rejected(amount):  # S9
+>       rejected(order(), amount, "Amount must be greater than zero")
+
+tests/test_refunds.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('-5.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+_______________________ test_smallest_amount_is_accepted _______________________
+
+    @pytest.mark.req("SPEC-142-AC3")
+    def test_smallest_amount_is_accepted():  # S9
+>       assert ask(order(), "0.01").refunded_total == D("0.01")
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_refunds.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('0.01'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+_____________ test_amount_above_the_refundable_amount_is_rejected ______________
+
+    @pytest.mark.req("SPEC-142-AC3")
+    def test_amount_above_the_refundable_amount_is_rejected():  # S10
+>       rejected(order(refunded="60.00"), "40.01", "Amount exceeds refundable amount")
+
+tests/test_refunds.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('60.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('40.01'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+_____________ test_amount_with_three_decimals_is_rejected[10.005] ______________
+
+amount = '10.005'
+
+    @pytest.mark.req("SPEC-142-AC3")
+    @pytest.mark.parametrize("amount", ["10.005", "0.005"])
+    def test_amount_with_three_decimals_is_rejected(amount):  # S11
+>       rejected(order(), amount, "Amount must have at most two decimals")
+
+tests/test_refunds.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('10.005'), currency = 'EUR'
+today = datetime.date(2026, 11, 27), role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+______________ test_amount_with_three_decimals_is_rejected[0.005] ______________
+
+amount = '0.005'
+
+    @pytest.mark.req("SPEC-142-AC3")
+    @pytest.mark.parametrize("amount", ["10.005", "0.005"])
+    def test_amount_with_three_decimals_is_rejected(amount):  # S11
+>       rejected(order(), amount, "Amount must have at most two decimals")
+
+tests/test_refunds.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('0.005'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+_________________ test_amount_in_another_currency_is_rejected __________________
+
+    @pytest.mark.req("SPEC-142-AC3")
+    def test_amount_in_another_currency_is_rejected():  # S12
+>       rejected(order(), "10.00", "Currency does not match the order", currency="USD")
+
+tests/test_refunds.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('10.00'), currency = 'USD', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+______________ test_refund_for_an_order_not_delivered_is_rejected ______________
+
+    @pytest.mark.req("SPEC-142-AC4")
+    def test_refund_for_an_order_not_delivered_is_rejected():  # S13
+>       rejected(order(days_ago=None), "10.00", "Order not delivered")
+
+tests/test_refunds.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_refunds.py:27: in rejected
+    ask(o, amount, **kw)
+tests/test_refunds.py:22: in ask
+    return request_refund(o, D(amount), currency, TODAY, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=None)
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+________________ test_decision_takes_less_than_1_ms_on_average _________________
+
+    @pytest.mark.nfr("perf")
+    def test_decision_takes_less_than_1_ms_on_average():  # S14
+        o, runs = order(), 10_000
+        start = time.perf_counter()
+        for _ in range(runs):
+>           request_refund(o, D("10.00"), "EUR", TODAY)
+
+tests/test_refunds.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+order = Order(total=Decimal('100.00'), refunded=Decimal('0.00'), currency='EUR', delivered_on=datetime.date(2026, 11, 22))
+amount = Decimal('10.00'), currency = 'EUR', today = datetime.date(2026, 11, 27)
+role = 'customer', reason = None
+
+    def request_refund(order, amount, currency, today, role="customer", reason=None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/refunds.py:18: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_refunds.py::test_full_refund_marks_the_order_refunded - Not...
+FAILED tests/test_refunds.py::test_partial_refund_marks_the_order_partially_refunded
+FAILED tests/test_refunds.py::test_refunding_the_rest_marks_the_order_refunded
+FAILED tests/test_refunds.py::test_customer_refund_inside_the_window_is_accepted[0]
+FAILED tests/test_refunds.py::test_customer_refund_inside_the_window_is_accepted[30]
+FAILED tests/test_refunds.py::test_customer_refund_on_day_31_is_rejected - No...
+FAILED tests/test_refunds.py::test_support_lead_can_accept_a_late_refund_with_a_reason
+FAILED tests/test_refunds.py::test_support_lead_override_without_a_reason_is_rejected[None]
+FAILED tests/test_refunds.py::test_support_lead_override_without_a_reason_is_rejected[]
+FAILED tests/test_refunds.py::test_support_lead_override_without_a_reason_is_rejected[   ]
+FAILED tests/test_refunds.py::test_delivery_date_in_the_future_is_rejected - ...
+FAILED tests/test_refunds.py::test_zero_or_negative_amount_is_rejected[0.00]
+FAILED tests/test_refunds.py::test_zero_or_negative_amount_is_rejected[-5.00]
+FAILED tests/test_refunds.py::test_smallest_amount_is_accepted - NotImplement...
+FAILED tests/test_refunds.py::test_amount_above_the_refundable_amount_is_rejected
+FAILED tests/test_refunds.py::test_amount_with_three_decimals_is_rejected[10.005]
+FAILED tests/test_refunds.py::test_amount_with_three_decimals_is_rejected[0.005]
+FAILED tests/test_refunds.py::test_amount_in_another_currency_is_rejected - N...
+FAILED tests/test_refunds.py::test_refund_for_an_order_not_delivered_is_rejected
+FAILED tests/test_refunds.py::test_decision_takes_less_than_1_ms_on_average
+20 failed in 0.03s

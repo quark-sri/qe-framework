@@ -9,7 +9,7 @@ Checks:
 4. The config matches `schemas/config.schema.json`, and every key in that schema says
    who enforces it (`x-aqef-enforced-by`). Each stage runs only commands defined in the config.
 5. Each KB file has an `id`; every `relates_to` id exists.
-6. Every relative markdown link in the kit and docs resolves to a file.
+6. Every relative markdown link in the kit, docs and examples resolves to a file.
 7. The JSON schemas are valid Draft 2020-12 schemas. Example records in `schemas/examples/`
    validate (`*.valid*.json`) or fail (`*.invalid*.json`) as named. The example metrics validate.
 8. Decisions (`docs/decisions/AQEF-nnn-*.md`): required keys, unique ids; each file in `applies_to`
@@ -142,7 +142,7 @@ def check_kb(errors, root, kit):
 
 
 def check_links(errors, root, kit):
-    paths = list(kit.rglob("*.md")) + list((root / "docs").rglob("*.md"))
+    paths = list(kit.rglob("*.md")) + list((root / "docs").rglob("*.md")) + list((root / "examples").rglob("*.md"))
     paths += [root / name for name in ("README.md", "CHANGELOG.md", "CONTRIBUTING.md", "ROADMAP.md")]
     for path in sorted(p for p in paths if p.exists()):
         text = re.sub(r"```.*?```", "", path.read_text(encoding="utf-8"), flags=re.S)

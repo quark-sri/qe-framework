@@ -40,6 +40,8 @@ date: <YYYY-MM-DD>
 | Accessibility | WCAG 2.2 AA | |
 | Security | | |
 
+An NFR that the tier requires but that does not apply to this change: write `Not applicable` and the reason in the Budget column. H1 approves it.
+
 ## KB changes proposed
 - New terms:
 - New or changed rules:

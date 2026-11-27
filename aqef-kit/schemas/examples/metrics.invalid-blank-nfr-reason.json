@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "feature": "SPEC-900",
+  "tier": "t1",
+  "nfr_not_applicable": {"accessibility": "   "}
+}

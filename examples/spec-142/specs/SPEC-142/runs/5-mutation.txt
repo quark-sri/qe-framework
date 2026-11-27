@@ -1,0 +1,10 @@
+mutmut 3.8.1 on src/refunds.py
+killed: 68, survived: 2, total: 70
+mutation_score: 68/70 = 0.97
+
+Survivors (both equivalent: the default role is only compared with "support_lead"):
+- refunds.x_request_refund__mutmut_1: role="customer" -> role="XXcustomerXX"
+- refunds.x_request_refund__mutmut_2: role="customer" -> role="CUSTOMER"
+
+An earlier run had a third survivor: the code dropped the override reason for refunds inside
+the window. The spec does not ask for that, so the rule was removed from the code, not tested.

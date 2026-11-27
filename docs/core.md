@@ -32,7 +32,7 @@ Each level adds proof. Move up one level when you meet the exit criteria of your
 | 1 Protected | Tags, tiers, Test Guard in CI, red-before-green for new tests, H1 and H4 | See the checklist below |
 | 2 Gated | The gatekeeper runs in CI on every PR. CI produces the required metrics. H3 for T1 | Every PR in one sprint has a gatekeeper decision. No required metric is missing |
 | 3 Measured | Mutation and seeded faults on T1 and T2, flake reruns, triage agent at L1, reports by capability | A baseline for each metric. Thresholds tuned to the baseline |
-| 4 Improving | Agents promoted on evidence, escape reviews each sprint, a scorecard each sprint | Every escaped defect produces a recorded change within one sprint |
+| 4 Improving | The `aqef-improve` skill each sprint: one change per escaped defect, a gate review and a scorecard. Agents promoted on evidence | Every escaped defect produces a recorded change within one sprint (AQEF-006) |
 
 ## Week 1: reach Level 1
 

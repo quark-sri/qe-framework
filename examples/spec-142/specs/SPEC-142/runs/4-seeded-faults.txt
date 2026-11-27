@@ -1,0 +1,15 @@
+F01 caught  DP-01 window off by one (>=)
+F02 caught  DP-01 window 31 days
+F03 caught  DP-02 decimals not checked
+F04 caught  DP-02 amount rounded instead of rejected
+F05 caught  Refundable ignores earlier refunds
+F06 caught  Refundable boundary off by one cent
+F07 caught  Zero amount accepted
+F08 caught  Currency not checked
+F09 caught  Override without reason accepted
+F10 caught  Any role can override
+F11 caught  Future delivery accepted
+F12 caught  Status ignores partial refunds
+F13 caught  Refunded total not accumulated
+F14 caught  Reason dropped
+seeded_fault_detection: 14/14 = 1.00
