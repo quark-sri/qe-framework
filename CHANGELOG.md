@@ -12,6 +12,10 @@ Theme: the improvement loops, proven on a worked example.
 - **`aqef-improve` skill**: each sprint, one escape record and one change per escaped defect, a gate effectiveness review and the scorecard.
 - `templates/escape-record.md` and `templates/scorecard.md` (7 metrics with formulas and sources, the same as the opt-in adopter scorecard).
 
+### Changed
+- The gate log has fixed columns (`templates/gate-log.md`), including the wait time and whether the gate found a real problem, so the scorecard can count them.
+- Maturity Level 4 and phase 8 use the `aqef-improve` skill.
+
 ## [0.3.0] - 2026-11-25
 
 Theme: any team can start in a week, on any stack and any coding agent.

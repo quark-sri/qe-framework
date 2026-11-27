@@ -3,7 +3,7 @@
 Each gate gets a ranked agent report with evidence. The reviewer must not need to read everything.
 A gate blocks the merge only when the tier says so (`on_escalate` in `.aqef/config.yaml`). Otherwise it runs as a follow-up after merge, so QE does not slow down the agents (AQEF-002).
 Response targets (AQEF-004, `speed_budget` in the config): H3 and H5 within 4 working hours, H1 and H2 within 1 working day. A late gate goes to a named backup reviewer. It is never auto-approved.
-Record each decision in the gate log of the feature (`specs/<feature>/gates.md`): gate, date, reviewer, decision, notes.
+Record each decision in the gate log of the feature (`specs/<feature>/gates.md`, from `templates/gate-log.md`): gate, date, reviewer, decision, wait in working hours, whether it found a real problem, notes.
 
 | Gate | Phase | When | Who |
 | --- | --- | --- | --- |
