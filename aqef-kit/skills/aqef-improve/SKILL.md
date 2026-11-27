@@ -5,7 +5,7 @@ description: AQEF improvement loop for the team's process. Each sprint it turns 
 
 # AQEF: Improve the process
 
-Each sprint, the process learns from what it missed and what it cost. Agents propose changes. Humans approve them through the normal gates.
+Each sprint, the process learns from what it missed and what it cost (AQEF-006). Agents propose changes. Humans approve them through the normal gates.
 
 ## Inputs
 - The defects found after release in this sprint (an export or a list from the defect tracker)
@@ -20,6 +20,7 @@ Each sprint, the process learns from what it missed and what it cost. Agents pro
 4. **Gate effectiveness.** From the gate logs, count for each gate: reviews, reviews that found a real problem, and the median wait in working hours. Compare the wait with `speed_budget`.
    - A gate that found no real problem in the last 3 months and has a cost: propose to relax it (for example, from always to a sample).
    - A stage named in `should_have_caught` by 2 or more escapes in a quarter: propose to make it stronger.
+   - Never propose to relax a blocking fact (AQEF-002) or the T1 test review (H3).
 5. **Scorecard.** Fill `templates/scorecard.md` and save it as `reports/scorecards/<sprint>.md`. Use the formulas in the template. Count; do not estimate. If a number is not available, write "not measured".
 6. **Report.** Post one ranked list of proposed changes to the team. Each item has its evidence and an owner.
 

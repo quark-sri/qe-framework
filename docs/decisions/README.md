@@ -17,6 +17,7 @@ These are the framework's own decisions, numbered `AQEF-nnn`. A team that adopts
 | [AQEF-003](AQEF-003-ai-product-track.md) | AI-product track in scope, narrow first version | This phase | Accepted |
 | [AQEF-004](AQEF-004-speed-budget.md) | Speed budget: targets for QE time and gate response, never auto-approve | This phase | Accepted |
 | [AQEF-005](AQEF-005-adopter-feedback.md) | Adopter feedback: opt-in manual scorecards, no automatic collection | This phase | Accepted |
+| [AQEF-006](AQEF-006-improvement-loop.md) | Improvement loop: one change per escaped defect, gates reviewed on evidence | This phase | **Proposed** |
 
 ## File format
 
