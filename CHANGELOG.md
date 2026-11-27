@@ -2,6 +2,14 @@
 
 All notable changes to AQEF. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [semantic versioning](https://semver.org/) as described in [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
+## [0.4.0] - Unreleased
+
+Theme: the improvement loops, proven on a worked example.
+
+### Added
+- **Worked example** (`examples/spec-142/`): one T1 feature through every phase with real evidence: red and green runs, mutation, seeded faults, flake reruns, security scan, metrics, quality report and gate log. CI runs it as a regression test for the framework.
+- `check_kit.py` checks the links in `examples/`.
+
 ## [0.3.0] - 2026-11-25
 
 Theme: any team can start in a week, on any stack and any coding agent.

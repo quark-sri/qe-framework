@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "feature": "SPEC-142",
+  "tier": "t1",
+  "criteria_coverage": 1.0,
+  "red_before_green_all": true,
+  "mutation_score": 0.97,
+  "seeded_fault_detection": 1.0,
+  "ui_share": 0.0,
+  "flake_rate": 0.0,
+  "test_guard_violations": 0,
+  "new_product_defects": 0,
+  "nfr_results": {
+    "security": "pass",
+    "performance": "pass"
+  }
+}
