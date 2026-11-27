@@ -12,6 +12,7 @@ Theme: the improvement loops, proven on a worked example.
 - **`aqef-improve` skill**: each sprint, one escape record and one change per escaped defect, a gate effectiveness review and the scorecard.
 - `templates/escape-record.md` and `templates/scorecard.md` (7 metrics with formulas and sources, the same as the opt-in adopter scorecard).
 
+- **NFR not applicable.** H1 can mark a required NFR as not applicable with a reason. The metrics carry it as `nfr_not_applicable`, and the gatekeeper shows it as an advisory instead of an escalation. A blank reason does not count; a real result always counts. Found by the worked example.
 - Decision AQEF-006: improvement loop. One change per escaped defect; gates reviewed on evidence; blocking facts and T1 H3 are never relaxed by the review.
 
 ### Changed

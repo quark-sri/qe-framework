@@ -40,6 +40,7 @@ Rules (framework decision AQEF-002):
 - Every metric in `gate.required_metrics` must be present. A missing one is a FAIL: a broken bot must not let bugs through.
 - Missing `gate.advisory_metrics` give an advisory only.
 - `nfr_results` maps each NFR type to `pass` or `fail`. A type that the tier requires but that has no result is an escalation.
+- `nfr_not_applicable` maps an NFR type to a reason, for example `{"accessibility": "No user interface in this change"}`. A human approves it at H1 in the spec; the bot copies it. The missing result then becomes an advisory. A blank reason does not count, and a real result always counts.
 - The T3 audit sample is picked from a hash of `feature`, so the same PR always gets the same answer.
 
 ## Test Guard (`testguard.py`)

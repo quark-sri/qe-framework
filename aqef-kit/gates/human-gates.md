@@ -37,7 +37,7 @@ Input: `specs/<feature>/spec-review.md`
 - [ ] No vague words remain ("fast", "easy", "secure") without a measure.
 - [ ] Negative and error behaviour is stated (what must not happen).
 - [ ] Conflicts with domain rules are resolved or recorded.
-- [ ] NFR budgets are stated where needed (latency, accessibility level, security controls).
+- [ ] NFR budgets are stated where needed (latency, accessibility level, security controls). An NFR marked not applicable has a reason that you agree with.
 - [ ] Risk tier is correct. A T1 tier is never lowered without the QE lead.
 - [ ] Open questions from the Spec Critic are answered.
 

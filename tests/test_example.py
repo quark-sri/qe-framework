@@ -23,10 +23,12 @@ def test_example_tests_pass():
     assert "20 passed" in proc.stdout
 
 
-def test_example_waits_for_h3_only_because_of_the_recorded_gap():
+def test_example_waits_for_h3_only_because_t1_always_does():
     res = decide(CONFIG, METRICS)
     assert (res["decision"], res["gates"]) == ("ESCALATE", ["H3"])
-    assert res["reasons"] == ["NFR accessibility: no result, tier t1 requires it"]
+    assert res["reasons"] == ["tier t1 requires human gate H3"]
+    assert res["advisories"] == ["NFR accessibility: not applicable: "
+                                 "No user interface in this change (spec NFR, approved at H1)"]
 
 
 def test_example_red_run_failed_every_test_the_green_run_passed():

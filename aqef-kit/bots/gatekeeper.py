@@ -100,9 +100,13 @@ def decide(config, metrics):
             and metrics["flake_rate"] > rules["gating_flake_rate_max"]:
         escalate.append(f"flake rate {metrics['flake_rate']:.3f} is above {rules['gating_flake_rate_max']:.3f}")
     nfr_results = metrics.get("nfr_results") or {}
+    not_applicable = metrics.get("nfr_not_applicable") or {}
     for nfr in tier_cfg.get("nfr_required") or []:
         outcome = nfr_results.get(nfr)
-        if outcome is None:
+        reason = str(not_applicable.get(nfr) or "").strip()
+        if outcome is None and reason:
+            advise.append(f"NFR {nfr}: not applicable: {reason}")
+        elif outcome is None:
             escalate.append(f"NFR {nfr}: no result, tier {tier} requires it")
         elif outcome != "pass":
             escalate.append(f"NFR {nfr}: result is {outcome}")

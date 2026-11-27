@@ -29,6 +29,11 @@
     "nfr_results": {
       "type": "object",
       "additionalProperties": {"enum": ["pass", "fail"]}
+    },
+    "nfr_not_applicable": {
+      "type": "object",
+      "description": "NFR types that a human marked as not applicable at H1, with the reason from the spec. A missing result for such a type is an advisory, not an escalation. A real result always counts",
+      "additionalProperties": {"type": "string", "pattern": "\\S"}
     }
   }
 }

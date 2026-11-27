@@ -21,3 +21,4 @@ Dates are calendar dates in UTC. Amounts are decimal numbers in the order curren
 
 - Performance: one refund decision takes less than 1 ms on average.
 - Security: no high or medium findings from static analysis.
+- Accessibility: not applicable. This change has no user interface (approved at H1).

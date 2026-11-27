@@ -8,7 +8,7 @@ date: 2026-11-27
 # Spec review: Customer refunds
 
 ## Summary
-- Findings: 1 high, 1 medium, 1 low
+- Findings: 1 high, 2 medium, 1 low
 - Proposed tier: t1 (moves money; capability `payments.refund` is T1)
 - Open questions: 2, answered at H1
 
@@ -27,6 +27,7 @@ date: 2026-11-27
 | --- | --- | --- | --- | --- | --- |
 | F1 | high | missing behaviour | The spec does not say what happens when a support lead gives no reason | AC2, REF-001 | 0.9 |
 | F2 | medium | missing behaviour | REF-001 rejects a delivery date in the future as a data error. The spec does not say this | REF-001 "Invalid inputs" | 0.8 |
+| F4 | medium | NFR gap | Tier t1 requires accessibility, but this change has no user interface | `.aqef/config.yaml` `nfr_required` | 0.9 |
 | F3 | low | NFR gap | The performance budget is an average. A p95 budget is better for an API | NFR section | 0.6 |
 
 ## Questions for the product owner
@@ -46,4 +47,4 @@ date: 2026-11-27
 - None. REF-001 and REF-002 cover the rules.
 
 ## Gate H1
-Decision: APPROVE with F1 and F2 answered — Reviewer: example-product-owner — Date: 2026-11-27
+Decision: APPROVE with F1 and F2 answered and accessibility not applicable (F4) — Reviewer: example-product-owner — Date: 2026-11-27

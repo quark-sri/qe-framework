@@ -13,5 +13,8 @@
   "nfr_results": {
     "security": "pass",
     "performance": "pass"
+  },
+  "nfr_not_applicable": {
+    "accessibility": "No user interface in this change (spec NFR, approved at H1)"
   }
 }
