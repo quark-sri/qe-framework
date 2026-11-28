@@ -17,7 +17,7 @@ AQEF is tool-agnostic. It plugs into any spec-driven AI SDLC (GitHub Spec Kit, A
 **No AI API keys or tokens are needed.** Agents run inside the coding agent your team already uses, on its normal plan. CI runs only deterministic bots, with no LLM calls ([AQEF-001](docs/decisions/AQEF-001-session-first.md)).
 [qestack](https://github.com/quark-sri/qestack) is one reference implementation of the test review panel and the proof and hardening gates.
 
-## Status (v0.3.0)
+## Status (v0.4.0)
 
 | Part | Status |
 | --- | --- |
