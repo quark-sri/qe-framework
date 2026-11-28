@@ -4,7 +4,7 @@
 # schemas/config.schema.json describes every key and says which bot, agent or human enforces it.
 
 config_version: 2
-aqef_version: "0.3.0"
+aqef_version: "0.4.0"
 
 paths:
   domain_kb: domain/

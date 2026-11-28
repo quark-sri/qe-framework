@@ -2,7 +2,7 @@
 
 All notable changes to AQEF. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [semantic versioning](https://semver.org/) as described in [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-## [0.4.0] - Unreleased
+## [0.4.0] - 2026-11-28
 
 Theme: the improvement loops, proven on a worked example.
 
